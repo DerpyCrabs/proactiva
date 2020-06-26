@@ -46,9 +46,14 @@ export const projectState = selectorFamily({
     return project
   },
   set: (projectId: number) => ({ set, get }, newValue) => {
-    set(projectsState, (projects) => [
-      ...projects.filter((project) => project.id !== projectId),
-      newValue,
-    ])
+    set(projectsState, (projects) =>
+      projects.reduce(
+        (acc, val) => [
+          ...acc,
+          val.id === projectId ? (newValue as Project) : val,
+        ],
+        [] as Array<Project>
+      )
+    )
   },
 }) as (param: number) => RecoilState<Project>
