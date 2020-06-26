@@ -25,7 +25,7 @@ import {
   MoreHoriz,
 } from '@material-ui/icons'
 import { makeStyles } from '@material-ui/styles'
-import { Project, projectsState } from '../state'
+import { Project, projectsState } from '../../state'
 
 const useStyles = makeStyles({
   dragHandle: {

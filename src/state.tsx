@@ -27,14 +27,18 @@ export const rootState = selector({
   get: ({ get }) => 0,
 })
 
-// const maxIdState = selector({
-//   key: 'maxId',
-//   get: ({ get }) => {
-//     const state = get(projectsState)
-//     return Math.max(...state.projects.map((project) => project.id))
-//     // TODO: count tasks too
-//   },
-// })
+export const maxIdState = selector({
+  key: 'maxId',
+  get: ({ get }) => {
+    const projects = get(projectsState)
+    return Math.max(
+      ...projects.flatMap((project) => [
+        project.id,
+        ...project.tasks.map((t) => t.id),
+      ])
+    )
+  },
+})
 
 export const projectState = selectorFamily({
   key: 'project',

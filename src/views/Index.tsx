@@ -6,8 +6,8 @@ import {
   Switch,
 } from 'react-router-dom'
 import { useRecoilValue } from 'recoil'
-import ProjectTree from '../components/ProjectTree'
-import TaskList from '../components/TaskList'
+import ProjectTree from '../features/ProjectTree/ProjectTree'
+import TaskList from '../features/TaskList/TaskList'
 import { projectsState } from '../state'
 
 export default function Index() {
