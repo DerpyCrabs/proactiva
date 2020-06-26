@@ -1,11 +1,18 @@
-import { atom, selector, selectorFamily } from 'recoil'
+import { RecoilState, atom, selector, selectorFamily } from 'recoil'
 
+export interface Task {
+  kind: 'Task'
+  id: number
+  name: string
+  checked: boolean
+}
 export interface Project {
   kind: 'Project'
   id: number
   name: string
   isExpanded: boolean
   parentId: number
+  tasks: Array<Task>
 }
 
 export const projectsState = atom({
@@ -31,14 +38,17 @@ export const rootState = selector({
 
 export const projectState = selectorFamily({
   key: 'project',
-  get: (projectId) => ({ get }) => {
+  get: (projectId: number) => ({ get }) => {
     const projects = get(projectsState)
-    return projects.find((project) => project.id === projectId) as Project
+    const project = projects.find((project) => project.id === projectId)
+    if (project === undefined)
+      throw new Error(`Failed to find project with id ${projectId}`)
+    return project
   },
-  set: (projectId) => ({ set, get }, newValue) => {
+  set: (projectId: number) => ({ set, get }, newValue) => {
     set(projectsState, (projects) => [
       ...projects.filter((project) => project.id !== projectId),
       newValue,
     ])
   },
-})
+}) as (param: number) => RecoilState<Project>

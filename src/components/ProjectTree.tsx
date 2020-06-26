@@ -3,6 +3,7 @@ import './ProjectTree.css'
 
 import * as R from 'ramda'
 import React from 'react'
+import { NavLink } from 'react-router-dom'
 import SortableTree, {
   FlatDataItem,
   FullTree,
@@ -35,6 +36,9 @@ const useStyles = makeStyles({
     '&:hover': {
       color: 'white',
     },
+  },
+  currentRoute: {
+    fontWeight: 'bold',
   },
 })
 
@@ -103,7 +107,7 @@ export default function ProjectTree() {
   return (
     <div
       style={{
-        height: '100vh',
+        height: 'calc(100vh - 20px)',
         width: '300px',
         marginTop: '20px',
         marginLeft: '10px',
@@ -159,7 +163,13 @@ export default function ProjectTree() {
                       />
                     )}
                     <Typography variant='subtitle1'>
-                      {rowInfo.node.title}
+                      <NavLink
+                        to={`/${rowInfo.node.id}`}
+                        style={{ color: 'unset', textDecoration: 'none' }}
+                        activeClassName={classes.currentRoute}
+                      >
+                        {rowInfo.node.title}
+                      </NavLink>
                     </Typography>
                   </>
                 ),

@@ -26,6 +26,14 @@ ReactDOM.render(
                 parentId: 0,
                 name: 'kek-child1',
                 isExpanded: true,
+                tasks: [
+                  { kind: 'Task', id: 4, name: 'task 1', checked: false },
+                  { kind: 'Task', id: 5, name: 'task 2', checked: false },
+                  { kind: 'Task', id: 6, name: 'task 3', checked: true },
+                  { kind: 'Task', id: 7, name: 'task 4', checked: false },
+                  { kind: 'Task', id: 8, name: 'task 5', checked: false },
+                  { kind: 'Task', id: 9, name: 'task 6', checked: true },
+                ],
               },
               {
                 kind: 'Project',
@@ -33,6 +41,7 @@ ReactDOM.render(
                 parentId: 0,
                 name: 'kek-child2',
                 isExpanded: false,
+                tasks: [],
               },
               {
                 kind: 'Project',
@@ -40,6 +49,7 @@ ReactDOM.render(
                 parentId: 1,
                 name: 'kek-child1-child',
                 isExpanded: false,
+                tasks: [],
               },
             ]
             set(projectsState, projects)
