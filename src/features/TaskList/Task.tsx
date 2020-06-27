@@ -1,4 +1,4 @@
-import { complement, filter, lensProp, over, propEq } from 'ramda'
+import { complement, filter, lensProp, over, propEq, reduce } from 'ramda'
 import React from 'react'
 import { Draggable } from 'react-beautiful-dnd'
 import { useSetRecoilState } from 'recoil'
@@ -8,6 +8,7 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
+  TextField,
   Typography,
 } from '@material-ui/core'
 import { Delete, DragIndicator } from '@material-ui/icons'
@@ -24,6 +25,22 @@ export default function TaskItem({
 }) {
   const setProject = useSetRecoilState(projectState(projectId))
   const [hover, setHover] = React.useState(false)
+  const [editing, setEditing] = React.useState(false)
+  const [taskName, setTaskName] = React.useState('')
+
+  const changeName = () =>
+    setProject(
+      over(
+        lensProp('tasks'),
+        reduce(
+          (acc, val: Task) => [
+            ...acc,
+            val.id === item.id ? { ...val, name: taskName } : val,
+          ],
+          [] as Array<Task>
+        )
+      )
+    )
 
   const onDelete = () =>
     setProject(
@@ -53,16 +70,44 @@ export default function TaskItem({
             <DragIndicator style={{ color: '#666', fontSize: 20 }} />
           </ListItemIcon>
           <Checkbox checked={item.checked} size='small' />
-          <ListItemText disableTypography={true}>
-            <Typography
-              style={{
-                fontSize: '14px',
-                lineHeight: '21px',
-                color: '#eee',
-              }}
-            >
-              {item.name}
-            </Typography>
+          <ListItemText
+            disableTypography={true}
+            onClick={() => {
+              setTaskName(item.name)
+              setEditing(true)
+            }}
+          >
+            {editing ? (
+              <TextField
+                variant='outlined'
+                size='small'
+                autoFocus
+                style={{ width: '100%' }}
+                inputProps={{ style: { padding: '6px', fontSize: '14px' } }}
+                value={taskName}
+                onChange={(e) => setTaskName(e.target.value)}
+                onKeyUp={(e) => {
+                  if (e.key === 'Escape') {
+                    setEditing(false)
+                  } else if (e.key === 'Enter') {
+                    changeName()
+                    setEditing(false)
+                  }
+                  e.preventDefault()
+                  e.stopPropagation()
+                }}
+              />
+            ) : (
+              <Typography
+                style={{
+                  fontSize: '14px',
+                  lineHeight: '21px',
+                  color: '#eee',
+                }}
+              >
+                {item.name}
+              </Typography>
+            )}
           </ListItemText>
           <IconButton
             edge='end'
