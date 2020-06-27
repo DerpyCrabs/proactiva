@@ -4,7 +4,7 @@ import {
   Checkbox,
   IconButton,
   ListItem,
-  ListItemSecondaryAction,
+  ListItemIcon,
   ListItemText,
   Typography,
 } from '@material-ui/core'
@@ -18,6 +18,7 @@ export default function TaskItem({
   item: Task
   index: number
 }) {
+  const [hover, setHover] = React.useState(false)
   return (
     <Draggable draggableId={`${item.id}`} index={index}>
       {(provided, snapshot) => (
@@ -28,17 +29,18 @@ export default function TaskItem({
             snapshot.isDragging,
             provided.draggableProps.style
           )}
+          onMouseEnter={() => setHover(true)}
+          onMouseLeave={() => setHover(false)}
         >
-          <IconButton
+          <ListItemIcon
             {...provided.dragHandleProps}
             style={{
-              padding: '9px',
-              paddingLeft: '18px',
-              paddingRight: '0px',
+              minWidth: '20px',
+              visibility: hover ? 'visible' : 'hidden',
             }}
           >
             <DragIndicator style={{ color: '#666', fontSize: 20 }} />
-          </IconButton>
+          </ListItemIcon>
           <Checkbox checked={item.checked} size='small' />
           <ListItemText disableTypography={true}>
             <Typography
@@ -51,11 +53,17 @@ export default function TaskItem({
               {item.name}
             </Typography>
           </ListItemText>
-          <ListItemSecondaryAction>
-            <IconButton edge='end' style={{ color: '#666' }}>
-              <Delete />
-            </IconButton>
-          </ListItemSecondaryAction>
+          <IconButton
+            edge='end'
+            style={{
+              color: '#666',
+              visibility: hover ? 'visible' : 'hidden',
+              padding: 0,
+              paddingRight: '10px',
+            }}
+          >
+            <Delete />
+          </IconButton>
         </ListItem>
       )}
     </Draggable>
@@ -65,8 +73,8 @@ export default function TaskItem({
 const getItemStyle = (isDragging: boolean, draggableStyle: any) => ({
   userSelect: 'none',
   padding: 0,
-  margin: `0 0 0px 0`,
   marginLeft: '-30px',
+  width: 'calc(100% + 30px)',
   background: isDragging ? '#484' : 'unset',
   ...draggableStyle,
 })

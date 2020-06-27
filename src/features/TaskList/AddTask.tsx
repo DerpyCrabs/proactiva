@@ -34,7 +34,7 @@ export default function AddTask({ projectId }: { projectId: number }) {
         style={{
           color: '#aaa',
           padding: '8px',
-          paddingLeft: '16px',
+          paddingLeft: '0px',
           paddingTop: '8px',
         }}
       >
@@ -59,7 +59,7 @@ export default function AddTask({ projectId }: { projectId: number }) {
         style={{
           color: '#aaa',
           padding: '8px',
-          paddingLeft: '16px',
+          paddingLeft: '0px',
           paddingTop: '0px',
           flexGrow: 1,
         }}

@@ -15,7 +15,7 @@ const reorder = (oldArr: Array<any>, startIndex: number, endIndex: number) => {
 }
 
 const getListStyle = (isDraggingOver: boolean) => ({
-  background: isDraggingOver ? '#444' : 'unset',
+  background: 'unset',
   padding: 0,
   maxWidth: '1000px',
   flexGrow: 1,
@@ -60,10 +60,7 @@ export default function TaskList() {
           paddingLeft: '45px',
         }}
       >
-        <Typography
-          variant='h5'
-          style={{ paddingLeft: '18px', paddingBottom: '10px' }}
-        >
+        <Typography variant='h5' style={{ paddingBottom: '10px' }}>
           Project name
         </Typography>
         <div style={{ display: 'flex', flexGrow: 1 }}>
