@@ -1,5 +1,7 @@
+import { complement, filter, lensProp, over, propEq } from 'ramda'
 import React from 'react'
 import { Draggable } from 'react-beautiful-dnd'
+import { useSetRecoilState } from 'recoil'
 import {
   Checkbox,
   IconButton,
@@ -9,16 +11,25 @@ import {
   Typography,
 } from '@material-ui/core'
 import { Delete, DragIndicator } from '@material-ui/icons'
-import { Task } from '../../state'
+import { Task, projectState } from '../../state'
 
 export default function TaskItem({
+  projectId,
   item,
   index,
 }: {
+  projectId: number
   item: Task
   index: number
 }) {
+  const setProject = useSetRecoilState(projectState(projectId))
   const [hover, setHover] = React.useState(false)
+
+  const onDelete = () =>
+    setProject(
+      over(lensProp('tasks'), filter(complement(propEq('id', item.id))))
+    )
+
   return (
     <Draggable draggableId={`${item.id}`} index={index}>
       {(provided, snapshot) => (
@@ -62,7 +73,7 @@ export default function TaskItem({
               paddingRight: '10px',
             }}
           >
-            <Delete />
+            <Delete onClick={onDelete} />
           </IconButton>
         </ListItem>
       )}

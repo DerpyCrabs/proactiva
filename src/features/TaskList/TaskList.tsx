@@ -74,7 +74,11 @@ export default function TaskList() {
                 >
                   {project.tasks.map((item: any, index: number) => (
                     <React.Fragment key={item.id}>
-                      <TaskItem item={item} index={index} />
+                      <TaskItem
+                        projectId={project.id}
+                        item={item}
+                        index={index}
+                      />
                       <Divider />
                     </React.Fragment>
                   ))}
