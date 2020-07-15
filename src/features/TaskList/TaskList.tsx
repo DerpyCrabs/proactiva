@@ -61,7 +61,7 @@ export default function TaskList() {
         }}
       >
         <Typography variant='h5' style={{ paddingBottom: '10px' }}>
-          Project name
+          {project.name}
         </Typography>
         <div style={{ display: 'flex', flexGrow: 1 }}>
           <DragDropContext onDragEnd={onDragEnd}>

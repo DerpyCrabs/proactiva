@@ -117,8 +117,9 @@ export default function TaskItem({
               padding: 0,
               paddingRight: '10px',
             }}
+            onClick={onDelete}
           >
-            <Delete onClick={onDelete} />
+            <Delete />
           </IconButton>
         </ListItem>
       )}
