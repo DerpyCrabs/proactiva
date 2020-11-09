@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { RecoilRoot } from 'recoil'
 import { CssBaseline, ThemeProvider } from '@material-ui/core'
+import { blue } from '@material-ui/core/colors'
 import { createMuiTheme } from '@material-ui/core/styles'
 import { projectsState } from './state'
 import type { Project } from './state'
@@ -10,6 +11,14 @@ import Index from './views/Index'
 const theme = createMuiTheme({
   palette: {
     type: 'dark',
+    primary: {
+      main: blue[500],
+    },
+  },
+  typography: {
+    fontFamily: 'Exo 2 rev=1',
+    fontWeightRegular: 100,
+    fontSize: 16,
   },
 })
 

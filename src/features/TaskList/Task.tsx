@@ -83,7 +83,7 @@ export default function TaskItem({
                 size='small'
                 autoFocus
                 style={{ width: '100%' }}
-                inputProps={{ style: { padding: '6px', fontSize: '14px' } }}
+                inputProps={{ style: { padding: '6px', fontSize: '16px' } }}
                 value={taskName}
                 onChange={(e) => setTaskName(e.target.value)}
                 onKeyUp={(e) => {
@@ -96,11 +96,12 @@ export default function TaskItem({
                   e.preventDefault()
                   e.stopPropagation()
                 }}
+                onBlur={(_) => setEditing(false)}
               />
             ) : (
               <Typography
                 style={{
-                  fontSize: '14px',
+                  fontSize: '16px',
                   lineHeight: '21px',
                   color: '#eee',
                 }}

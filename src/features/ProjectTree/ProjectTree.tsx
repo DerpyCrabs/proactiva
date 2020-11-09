@@ -16,9 +16,8 @@ import SortableTree, {
 //@ts-ignore
 import MaterialTheme from 'react-sortable-tree-theme-material-ui'
 import { selector, useRecoilValue, useSetRecoilState } from 'recoil'
-import { Button, IconButton, Typography } from '@material-ui/core'
+import { IconButton, Typography } from '@material-ui/core'
 import {
-  Add,
   ChevronRight,
   DragIndicator,
   KeyboardArrowDown,
@@ -26,6 +25,7 @@ import {
 } from '@material-ui/icons'
 import { makeStyles } from '@material-ui/styles'
 import { Project, projectsState } from '../../state'
+import AddProject from './AddProject'
 
 const useStyles = makeStyles({
   dragHandle: {
@@ -177,15 +177,7 @@ export default function ProjectTree() {
             : {
                 buttons: null,
                 icons: null,
-                title: (
-                  <Button
-                    style={{ marginLeft: 14, color: '#bbb' }}
-                    startIcon={<Add />}
-                    size='small'
-                  >
-                    Add Project
-                  </Button>
-                ),
+                title: <AddProject />,
               }
         }
       />

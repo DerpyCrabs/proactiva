@@ -48,7 +48,10 @@ export default function AddTask({ projectId }: { projectId: number }) {
             }}
           />
         </span>
-        <span style={{ fontSize: 14 }} onClick={() => setAdding(true)}>
+        <span
+          style={{ fontSize: '16px', fontFamily: 'Exo 2 rev=1' }}
+          onClick={() => setAdding(true)}
+        >
           Add task
         </span>
       </div>
@@ -98,7 +101,11 @@ export default function AddTask({ projectId }: { projectId: number }) {
             <Button
               onClick={() => setAdding(false)}
               size='small'
-              style={{ color: '#aaa', marginLeft: '6px' }}
+              style={{
+                color: '#aaa',
+                marginLeft: '6px',
+                fontFamily: 'Exo 2 rev=1',
+              }}
             >
               Cancel
             </Button>

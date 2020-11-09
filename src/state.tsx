@@ -24,7 +24,7 @@ export const projectsState = atom({
 
 export const rootState = selector({
   key: 'root',
-  get: ({ get }) => 0,
+  get: () => 0,
 })
 
 export const maxIdState = selector({
