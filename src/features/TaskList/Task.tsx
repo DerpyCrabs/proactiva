@@ -1,4 +1,15 @@
-import { complement, filter, lensProp, over, propEq, reduce } from 'ramda'
+import {
+  Lens,
+  complement,
+  compose,
+  filter,
+  lensIndex,
+  lensProp,
+  not,
+  over,
+  propEq,
+  reduce,
+} from 'ramda'
 import React from 'react'
 import { Draggable } from 'react-beautiful-dnd'
 import { useSetRecoilState } from 'recoil'
@@ -47,6 +58,18 @@ export default function TaskItem({
       over(lensProp('tasks'), filter(complement(propEq('id', item.id))))
     )
 
+  const toggleCompletion = () =>
+    setProject(
+      over(
+        compose(
+          lensProp('tasks'),
+          lensIndex(index),
+          lensProp('checked')
+        ) as Lens,
+        not
+      )
+    )
+
   return (
     <Draggable draggableId={`${item.id}`} index={index}>
       {(provided, snapshot) => (
@@ -69,7 +92,11 @@ export default function TaskItem({
           >
             <DragIndicator style={{ color: '#666', fontSize: 20 }} />
           </ListItemIcon>
-          <Checkbox checked={item.checked} size='small' />
+          <Checkbox
+            checked={item.checked}
+            size='small'
+            onChange={toggleCompletion}
+          />
           <ListItemText
             disableTypography={true}
             onClick={() => {
