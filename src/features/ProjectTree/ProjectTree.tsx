@@ -16,26 +16,20 @@ import SortableTree, {
 //@ts-ignore
 import MaterialTheme from 'react-sortable-tree-theme-material-ui'
 import { selector, useRecoilValue, useSetRecoilState } from 'recoil'
-import { IconButton, Typography } from '@material-ui/core'
+import { Typography } from '@material-ui/core'
 import {
   ChevronRight,
   DragIndicator,
   KeyboardArrowDown,
-  MoreHoriz,
 } from '@material-ui/icons'
 import { makeStyles } from '@material-ui/styles'
 import { Project, projectsState } from '../../state'
 import AddProject from './AddProject'
+import ProjectActions from './ProjectActions'
 
 const useStyles = makeStyles({
   dragHandle: {
     color: '#666',
-  },
-  moreActions: {
-    color: '#777',
-    '&:hover': {
-      color: 'white',
-    },
   },
   currentRoute: {
     fontWeight: 'bold',
@@ -126,11 +120,7 @@ export default function ProjectTree() {
         generateNodeProps={(rowInfo) =>
           rowInfo.node.id !== undefined
             ? {
-                buttons: (
-                  <IconButton size='small' className={classes.moreActions}>
-                    <MoreHoriz style={{ fontSize: 20 }} />
-                  </IconButton>
-                ),
+                buttons: <ProjectActions projectId={rowInfo.node.id} />,
                 icons: (
                   <DragIndicator
                     className={classes.dragHandle}
