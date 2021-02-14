@@ -23,7 +23,7 @@ import {
   Typography,
 } from '@material-ui/core'
 import { Delete, DragIndicator } from '@material-ui/icons'
-import { Task, projectState } from '../../state'
+import { Project, Task, projectState } from '../../state'
 
 export default function TaskItem({
   projectId,
@@ -65,7 +65,7 @@ export default function TaskItem({
           lensProp('tasks'),
           lensIndex(index),
           lensProp('checked')
-        ) as Lens,
+        ) as Lens<Project, boolean>,
         not
       )
     )

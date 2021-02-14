@@ -22,7 +22,7 @@ const getListStyle = (isDraggingOver: boolean) => ({
 })
 
 export default function TaskList() {
-  let { id } = useParams()
+  let { id } = useParams() as { id: string }
   const [project, setProject] = useRecoilState(projectState(parseInt(id)))
   const setTasks = (items: Array<Task>) =>
     setProject((project) => ({ ...project, tasks: items }))
