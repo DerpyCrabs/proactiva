@@ -3,7 +3,7 @@ import React from 'react'
 import { DragDropContext, DropResult, Droppable } from 'react-beautiful-dnd'
 import { useParams } from 'react-router-dom'
 import { Divider, List, Typography } from '@material-ui/core'
-import { Task, projectState } from '../../state'
+import { Task, Todo, projectTasksState, taskState } from '../../state'
 import AddTask from './AddTask'
 import TaskItem from './Task'
 
@@ -23,12 +23,11 @@ const getListStyle = (isDraggingOver: boolean) => ({
 
 export default function TaskList() {
   let { id } = useParams() as { id: string }
-  const [project, setProject] = useAtom(projectState(parseInt(id)))
+  const [project] = useAtom(taskState(parseInt(id)))
+  const [tasks, setTasks] = useAtom(projectTasksState(parseInt(id)))
   if (project === undefined) {
     throw new Error('Failed to find project')
   }
-  const setTasks = (items: Array<Task>) =>
-    setProject((project) => ({ ...project, tasks: items }))
 
   const onDragEnd = (result: DropResult) => {
     if (!result.destination) {
@@ -36,7 +35,7 @@ export default function TaskList() {
     }
 
     const newTasks = reorder(
-      project.tasks.slice(),
+      tasks.slice(),
       result.source.index,
       result.destination.index
     )
@@ -75,11 +74,11 @@ export default function TaskList() {
                   ref={provided.innerRef}
                   style={getListStyle(snapshot.isDraggingOver)}
                 >
-                  {project.tasks.map((item: any, index: number) => (
+                  {tasks.map((item: Task, index: number) => (
                     <React.Fragment key={item.id}>
                       <TaskItem
                         projectId={project.id}
-                        item={item}
+                        item={item as Todo} /* TODO: dispatch on task type */
                         index={index}
                       />
                       <Divider />

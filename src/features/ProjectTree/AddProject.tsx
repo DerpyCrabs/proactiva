@@ -1,4 +1,6 @@
 import { useAtom } from 'jotai'
+import { useAtomValue, useUpdateAtom } from 'jotai/utils'
+import { append } from 'ramda'
 import React from 'react'
 import {
   Button,
@@ -13,28 +15,31 @@ import {
   TextField,
 } from '@material-ui/core'
 import { Add } from '@material-ui/icons'
-import { maxIdState, projectsState } from '../../state'
+import { maxIdState, projectsState, tasksState } from '../../state'
 
 export default function AddProject() {
   const [showModal, setShowModal] = React.useState(false)
-  const [projects, setProjects] = useAtom(projectsState)
+  const projects = useAtomValue(projectsState)
+  const setTasks = useUpdateAtom(tasksState)
   const [maxId] = useAtom(maxIdState)
   const [parent, setParent] = React.useState(projects[0].id)
   const [name, setName] = React.useState('')
 
   const addProject = () => {
     if (name.length !== 0) {
-      setProjects((projects) => [
-        ...projects,
-        {
+      setTasks(
+        append({
           kind: 'Project',
           id: maxId + 1,
           name,
           isExpanded: false,
-          parentId: parent,
+          parent,
           tasks: [],
-        },
-      ])
+          history: [],
+          creationDate: new Date(),
+          modificationDate: new Date(),
+        })
+      )
       setShowModal(false)
       setName('')
       setParent(projects[0].id)

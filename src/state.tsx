@@ -1,68 +1,71 @@
-import { atom } from 'jotai'
+import { WritableAtom, atom } from 'jotai'
+import { SetStateAction } from 'jotai/core/types'
 import { focusAtom } from 'jotai/optics'
 
+export type Id = number
+
 export interface Task {
-  kind: 'Task'
-  id: number
+  id: Id
   name: string
-  checked: boolean
-}
-export interface Project {
-  kind: 'Project'
-  id: number
-  name: string
-  isExpanded: boolean
-  parentId: number
-  tasks: Array<Task>
+  description?: string
+  creationDate: Date
+  modificationDate: Date
+  parent?: Id
+  kind: string
 }
 
-export const projectsState = atom<Array<Project>>([
+export interface Todo extends Task {
+  kind: 'Todo'
+  status: boolean
+}
+
+export interface Project extends Task {
+  kind: 'Project'
+  history: Array<{ task: Task; deleted: Date }>
+  isExpanded: boolean
+}
+
+export interface Note extends Task {
+  kind: 'Note'
+}
+
+export const tasksState = atom<Array<Task>>([
   {
     kind: 'Project',
     id: 1,
-    parentId: 0,
-    name: 'kek-child1',
-    isExpanded: true,
-    tasks: [
-      { kind: 'Task', id: 4, name: 'task 1', checked: false },
-      { kind: 'Task', id: 5, name: 'task 2', checked: false },
-      { kind: 'Task', id: 6, name: 'task 3', checked: true },
-      { kind: 'Task', id: 7, name: 'task 4', checked: false },
-      { kind: 'Task', id: 8, name: 'task 5', checked: false },
-      { kind: 'Task', id: 9, name: 'task 6', checked: true },
-    ],
-  },
+    name: '/',
+    description: 'Root project',
+    history: [],
+    creationDate: new Date(),
+    modificationDate: new Date(),
+    isExpanded: false,
+  } as Project,
   {
-    kind: 'Project',
+    kind: 'Todo',
     id: 2,
-    parentId: 0,
-    name: 'kek-child2',
-    isExpanded: false,
-    tasks: [],
-  },
-  {
-    kind: 'Project',
-    id: 3,
-    parentId: 1,
-    name: 'kek-child1-child',
-    isExpanded: false,
-    tasks: [],
-  },
+    name: 'task 1',
+    status: true,
+    parent: 1,
+    creationDate: new Date(),
+    modificationDate: new Date(),
+  } as Todo,
 ])
 
-export const rootState = atom(0)
-
 export const maxIdState = atom((get) => {
-  const projects = get(projectsState)
-  return Math.max(
-    ...projects.flatMap((project) => [
-      project.id,
-      ...project.tasks.map((t) => t.id),
-    ])
-  )
+  const tasks = get(tasksState)
+  return Math.max(...tasks.map((t) => t.id))
 })
 
-export const projectState = (id: number) =>
-  focusAtom(projectsState, (optic) =>
-    optic.find((project) => project.id === id)
+export const taskState = (id: number) =>
+  focusAtom(tasksState, (optic) => optic.find((t) => t.id === id))
+
+export const projectTasksState = (id: number) =>
+  focusAtom(tasksState, (optic) =>
+    optic.filter(
+      (t) => t.parent === id && (t.kind === 'Todo' || t.kind === 'Note')
+    )
   )
+
+export const projectsState = (focusAtom(tasksState, (optic) =>
+  optic.filter((t) => t.kind === 'Project')
+) as unknown) as WritableAtom<Project[], SetStateAction<Project[]>>

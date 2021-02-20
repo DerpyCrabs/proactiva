@@ -1,16 +1,5 @@
 import { useUpdateAtom } from 'jotai/utils'
-import {
-  Lens,
-  complement,
-  compose,
-  filter,
-  lensIndex,
-  lensProp,
-  not,
-  over,
-  propEq,
-  reduce,
-} from 'ramda'
+import { assoc, filter } from 'ramda'
 import React from 'react'
 import { Draggable } from 'react-beautiful-dnd'
 import {
@@ -23,52 +12,27 @@ import {
   Typography,
 } from '@material-ui/core'
 import { Delete, DragIndicator } from '@material-ui/icons'
-import { Project, Task, projectState } from '../../state'
+import { Task, Todo, taskState, tasksState } from '../../state'
 
 export default function TaskItem({
-  projectId,
   item,
   index,
 }: {
   projectId: number
-  item: Task
+  item: Todo
   index: number
 }) {
-  const setProject = useUpdateAtom(projectState(projectId))
+  const setTasks = useUpdateAtom(tasksState)
+  const setTask = useUpdateAtom(taskState(item.id))
   const [hover, setHover] = React.useState(false)
   const [editing, setEditing] = React.useState(false)
   const [taskName, setTaskName] = React.useState('')
 
-  const changeName = () =>
-    setProject(
-      over(
-        lensProp('tasks'),
-        reduce(
-          (acc, val: Task) => [
-            ...acc,
-            val.id === item.id ? { ...val, name: taskName } : val,
-          ],
-          [] as Array<Task>
-        )
-      )
-    )
+  const changeName = () => setTask(assoc('name', taskName))
 
-  const onDelete = () =>
-    setProject(
-      over(lensProp('tasks'), filter(complement(propEq('id', item.id))))
-    )
+  const onDelete = () => setTasks(filter<Task>((t) => t.id !== item.id))
 
-  const toggleCompletion = () =>
-    setProject(
-      over(
-        compose(
-          lensProp('tasks'),
-          lensIndex(index),
-          lensProp('checked')
-        ) as Lens<Project, boolean>,
-        not
-      )
-    )
+  const toggleCompletion = () => setTask(assoc('status', !item.status))
 
   return (
     <Draggable draggableId={`${item.id}`} index={index}>
@@ -93,7 +57,7 @@ export default function TaskItem({
             <DragIndicator style={{ color: '#666', fontSize: 20 }} />
           </ListItemIcon>
           <Checkbox
-            checked={item.checked}
+            checked={item.status}
             size='small'
             onChange={toggleCompletion}
           />

@@ -1,29 +1,28 @@
 import { useAtomValue, useUpdateAtom } from 'jotai/utils'
-import { append } from 'ramda'
 import React from 'react'
 import { Button, TextField } from '@material-ui/core'
 import { Add } from '@material-ui/icons'
-import { maxIdState, projectState } from '../../state'
+import { maxIdState, tasksState } from '../../state'
 
 export default function AddTask({ projectId }: { projectId: number }) {
-  const setProject = useUpdateAtom(projectState(projectId))
+  const setTasks = useUpdateAtom(tasksState)
   const maxId = useAtomValue(maxIdState)
   const [adding, setAdding] = React.useState(false)
   const [taskName, setTaskName] = React.useState('')
   const addTask = () => {
     if (taskName.length !== 0) {
-      setProject((project) => ({
-        ...project,
-        tasks: append(
-          {
-            kind: 'Task',
-            id: maxId + 1,
-            name: taskName,
-            checked: false,
-          },
-          project.tasks
-        ),
-      }))
+      setTasks((tasks) => [
+        ...tasks,
+        {
+          kind: 'Todo',
+          id: maxId + 1,
+          name: taskName,
+          creationDate: new Date(),
+          modificationDate: new Date(),
+          status: false,
+          parent: projectId,
+        },
+      ])
       setAdding(false)
       setTaskName('')
     }
