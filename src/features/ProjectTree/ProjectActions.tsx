@@ -1,5 +1,5 @@
+import { useUpdateAtom } from 'jotai/utils'
 import React from 'react'
-import { useSetRecoilState } from 'recoil'
 import { IconButton, Menu, MenuItem, makeStyles } from '@material-ui/core'
 import { MoreHoriz } from '@material-ui/icons'
 import { projectsState } from '../../state'
@@ -15,7 +15,7 @@ const useStyles = makeStyles({
 
 export default function ProjectActions({ projectId }: { projectId: number }) {
   const classes = useStyles()
-  const setProjects = useSetRecoilState(projectsState)
+  const setProjects = useUpdateAtom(projectsState)
   const [anchorEl, setAnchorEl] = React.useState(null as null | Element)
 
   const handleDelete = () => {

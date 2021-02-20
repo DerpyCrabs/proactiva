@@ -1,5 +1,5 @@
+import { useAtom } from 'jotai'
 import React from 'react'
-import { useRecoilState, useRecoilValue } from 'recoil'
 import {
   Button,
   Dialog,
@@ -17,8 +17,8 @@ import { maxIdState, projectsState } from '../../state'
 
 export default function AddProject() {
   const [showModal, setShowModal] = React.useState(false)
-  const [projects, setProjects] = useRecoilState(projectsState)
-  const maxId = useRecoilValue(maxIdState)
+  const [projects, setProjects] = useAtom(projectsState)
+  const [maxId] = useAtom(maxIdState)
   const [parent, setParent] = React.useState(projects[0].id)
   const [name, setName] = React.useState('')
 

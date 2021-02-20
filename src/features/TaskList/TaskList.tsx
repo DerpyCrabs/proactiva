@@ -1,7 +1,7 @@
+import { useAtom } from 'jotai'
 import React from 'react'
 import { DragDropContext, DropResult, Droppable } from 'react-beautiful-dnd'
 import { useParams } from 'react-router-dom'
-import { useRecoilState } from 'recoil'
 import { Divider, List, Typography } from '@material-ui/core'
 import { Task, projectState } from '../../state'
 import AddTask from './AddTask'
@@ -23,7 +23,10 @@ const getListStyle = (isDraggingOver: boolean) => ({
 
 export default function TaskList() {
   let { id } = useParams() as { id: string }
-  const [project, setProject] = useRecoilState(projectState(parseInt(id)))
+  const [project, setProject] = useAtom(projectState(parseInt(id)))
+  if (project === undefined) {
+    throw new Error('Failed to find project')
+  }
   const setTasks = (items: Array<Task>) =>
     setProject((project) => ({ ...project, tasks: items }))
 

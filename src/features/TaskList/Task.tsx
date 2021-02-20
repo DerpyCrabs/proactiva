@@ -1,3 +1,4 @@
+import { useUpdateAtom } from 'jotai/utils'
 import {
   Lens,
   complement,
@@ -12,7 +13,6 @@ import {
 } from 'ramda'
 import React from 'react'
 import { Draggable } from 'react-beautiful-dnd'
-import { useSetRecoilState } from 'recoil'
 import {
   Checkbox,
   IconButton,
@@ -34,7 +34,7 @@ export default function TaskItem({
   item: Task
   index: number
 }) {
-  const setProject = useSetRecoilState(projectState(projectId))
+  const setProject = useUpdateAtom(projectState(projectId))
   const [hover, setHover] = React.useState(false)
   const [editing, setEditing] = React.useState(false)
   const [taskName, setTaskName] = React.useState('')

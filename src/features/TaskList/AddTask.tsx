@@ -1,13 +1,13 @@
+import { useAtomValue, useUpdateAtom } from 'jotai/utils'
 import { append } from 'ramda'
 import React from 'react'
-import { useRecoilValue, useSetRecoilState } from 'recoil'
 import { Button, TextField } from '@material-ui/core'
 import { Add } from '@material-ui/icons'
 import { maxIdState, projectState } from '../../state'
 
 export default function AddTask({ projectId }: { projectId: number }) {
-  const setProject = useSetRecoilState(projectState(projectId))
-  const maxId = useRecoilValue(maxIdState)
+  const setProject = useUpdateAtom(projectState(projectId))
+  const maxId = useAtomValue(maxIdState)
   const [adding, setAdding] = React.useState(false)
   const [taskName, setTaskName] = React.useState('')
   const addTask = () => {

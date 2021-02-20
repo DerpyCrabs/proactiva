@@ -1,4 +1,5 @@
-import { RecoilState, atom, selector, selectorFamily } from 'recoil'
+import { atom } from 'jotai'
+import { focusAtom } from 'jotai/optics'
 
 export interface Task {
   kind: 'Task'
@@ -15,49 +16,53 @@ export interface Project {
   tasks: Array<Task>
 }
 
-export const projectsState = atom({
-  key: 'projects',
-  default: [
-    { name: 'Root', id: 0, isExpanded: false, parentId: 0, kind: 'Project' },
-  ] as Array<Project>,
+export const projectsState = atom<Array<Project>>([
+  {
+    kind: 'Project',
+    id: 1,
+    parentId: 0,
+    name: 'kek-child1',
+    isExpanded: true,
+    tasks: [
+      { kind: 'Task', id: 4, name: 'task 1', checked: false },
+      { kind: 'Task', id: 5, name: 'task 2', checked: false },
+      { kind: 'Task', id: 6, name: 'task 3', checked: true },
+      { kind: 'Task', id: 7, name: 'task 4', checked: false },
+      { kind: 'Task', id: 8, name: 'task 5', checked: false },
+      { kind: 'Task', id: 9, name: 'task 6', checked: true },
+    ],
+  },
+  {
+    kind: 'Project',
+    id: 2,
+    parentId: 0,
+    name: 'kek-child2',
+    isExpanded: false,
+    tasks: [],
+  },
+  {
+    kind: 'Project',
+    id: 3,
+    parentId: 1,
+    name: 'kek-child1-child',
+    isExpanded: false,
+    tasks: [],
+  },
+])
+
+export const rootState = atom(0)
+
+export const maxIdState = atom((get) => {
+  const projects = get(projectsState)
+  return Math.max(
+    ...projects.flatMap((project) => [
+      project.id,
+      ...project.tasks.map((t) => t.id),
+    ])
+  )
 })
 
-export const rootState = selector({
-  key: 'root',
-  get: () => 0,
-})
-
-export const maxIdState = selector({
-  key: 'maxId',
-  get: ({ get }) => {
-    const projects = get(projectsState)
-    return Math.max(
-      ...projects.flatMap((project) => [
-        project.id,
-        ...project.tasks.map((t) => t.id),
-      ])
-    )
-  },
-})
-
-export const projectState = selectorFamily({
-  key: 'project',
-  get: (projectId: number) => ({ get }) => {
-    const projects = get(projectsState)
-    const project = projects.find((project) => project.id === projectId)
-    if (project === undefined)
-      throw new Error(`Failed to find project with id ${projectId}`)
-    return project
-  },
-  set: (projectId: number) => ({ set, get }, newValue) => {
-    set(projectsState, (projects) =>
-      projects.reduce(
-        (acc, val) => [
-          ...acc,
-          val.id === projectId ? (newValue as Project) : val,
-        ],
-        [] as Array<Project>
-      )
-    )
-  },
-}) as (param: number) => RecoilState<Project>
+export const projectState = (id: number) =>
+  focusAtom(projectsState, (optic) =>
+    optic.find((project) => project.id === id)
+  )

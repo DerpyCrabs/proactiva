@@ -1,8 +1,9 @@
 import 'react-sortable-tree/style.css'
 import './ProjectTree.css'
 
+import { atom } from 'jotai'
+import { useAtomValue, useUpdateAtom } from 'jotai/utils'
 import * as R from 'ramda'
-import React from 'react'
 import { NavLink } from 'react-router-dom'
 import SortableTree, {
   FlatDataItem,
@@ -15,7 +16,6 @@ import SortableTree, {
 } from 'react-sortable-tree'
 //@ts-ignore
 import MaterialTheme from 'react-sortable-tree-theme-material-ui'
-import { selector, useRecoilValue, useSetRecoilState } from 'recoil'
 import { Typography } from '@material-ui/core'
 import {
   ChevronRight,
@@ -36,29 +36,26 @@ const useStyles = makeStyles({
   },
 })
 
-export const projectTreeState = selector({
-  key: 'projectTree',
-  get: ({ get }) => {
-    const projects = get(projectsState).map((project) => ({
-      ...project,
-      title: project.name,
-      expanded: project.isExpanded,
-    }))
-    return getTreeFromFlatData({
-      flatData: [
-        ...projects,
-        { title: 'Add Project', parentId: 0, expanded: false },
-      ],
-      rootKey: 0,
-    })
-  },
+export const projectTreeState = atom((get) => {
+  const projects = get(projectsState).map((project) => ({
+    ...project,
+    title: project.name,
+    expanded: project.isExpanded,
+  }))
+  return getTreeFromFlatData({
+    flatData: [
+      ...projects,
+      { title: 'Add Project', parentId: 0, expanded: false },
+    ],
+    rootKey: 0,
+  })
 })
 
 export default function ProjectTree() {
   const classes = useStyles()
 
-  const tree = useRecoilValue(projectTreeState)
-  const setProjects = useSetRecoilState(projectsState)
+  const tree = useAtomValue(projectTreeState)
+  const setProjects = useUpdateAtom(projectsState)
 
   const onVisibilityToggle = ({
     node,

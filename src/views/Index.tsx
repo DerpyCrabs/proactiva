@@ -1,17 +1,16 @@
-import React from 'react'
+import { useAtomValue } from 'jotai/utils'
 import {
   Redirect,
   Route,
   BrowserRouter as Router,
   Switch,
 } from 'react-router-dom'
-import { useRecoilValue } from 'recoil'
 import ProjectTree from '../features/ProjectTree/ProjectTree'
 import TaskList from '../features/TaskList/TaskList'
 import { projectsState } from '../state'
 
 export default function Index() {
-  const projects = useRecoilValue(projectsState)
+  const projects = useAtomValue(projectsState)
   // TODO fallback if no projects exist
   return (
     <Router>
