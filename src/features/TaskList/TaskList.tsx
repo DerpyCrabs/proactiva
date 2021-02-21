@@ -1,7 +1,7 @@
 import { useAtom } from 'jotai'
 import React from 'react'
 import { DragDropContext, DropResult, Droppable } from 'react-beautiful-dnd'
-import { useParams } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
 import { Divider, List, Typography } from '@material-ui/core'
 import { Task, Todo, projectTasksState, taskState } from '../../state'
 import AddTask from './AddTask'
@@ -25,8 +25,10 @@ export default function TaskList() {
   let { id } = useParams() as { id: string }
   const [project] = useAtom(taskState(parseInt(id)))
   const [tasks, setTasks] = useAtom(projectTasksState(parseInt(id)))
+  const history = useHistory()
   if (project === undefined) {
-    throw new Error('Failed to find project')
+    history.push('/')
+    return <span>Redirecting...</span>
   }
 
   const onDragEnd = (result: DropResult) => {

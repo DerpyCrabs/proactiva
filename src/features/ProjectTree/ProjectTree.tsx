@@ -44,9 +44,11 @@ export const projectTreeState = atom((get) => {
   }))
   return getTreeFromFlatData({
     flatData: [
-      ...projects.map((p) =>
-        p.parent ? { ...p, parentId: p.parent } : { ...p, parentId: 0 }
-      ),
+      ...projects
+        .filter((p) => p.id !== 0)
+        .map((p) =>
+          p.parent ? { ...p, parentId: p.parent } : { ...p, parentId: 0 }
+        ),
       { title: 'Add Project', parentId: 0, expanded: false },
     ],
     rootKey: 0,

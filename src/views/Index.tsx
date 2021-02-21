@@ -8,18 +8,22 @@ import {
 import ProjectTree from '../features/ProjectTree/ProjectTree'
 import TaskList from '../features/TaskList/TaskList'
 import { projectsState } from '../state'
+import NoProjectsExist from './NoProjectsExist'
 
 export default function Index() {
   const projects = useAtomValue(projectsState)
-  // TODO fallback if no projects exist
   return (
     <Router>
       <div style={{ display: 'flex' }}>
         <ProjectTree />
         <Switch>
-          <Route exact path='/'>
-            <Redirect to={`/${projects[0].id}`} />
-          </Route>
+          {projects.length !== 1 ? (
+            <Route exact path='/'>
+              <Redirect to={`/${projects[1].id}`} />
+            </Route>
+          ) : (
+            <Route exact path='/' children={<NoProjectsExist />} />
+          )}
           <Route path='/:id' children={<TaskList />} />
         </Switch>
       </div>

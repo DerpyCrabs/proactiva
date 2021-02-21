@@ -1,4 +1,5 @@
 import { useAtomValue, useUpdateAtom } from 'jotai/utils'
+import { optic, set } from 'optics-ts'
 import { append } from 'ramda'
 import React from 'react'
 import {
@@ -14,7 +15,7 @@ import {
   TextField,
 } from '@material-ui/core'
 import { Add } from '@material-ui/icons'
-import { maxIdState, projectsState, tasksState } from '../../state'
+import { Project, maxIdState, projectsState, tasksState } from '../../state'
 
 export default function AddProject() {
   const [showModal, setShowModal] = React.useState(false)
@@ -26,19 +27,26 @@ export default function AddProject() {
 
   const addProject = () => {
     if (name.length !== 0) {
-      setTasks(
-        append({
-          kind: 'Project',
-          id: maxId + 1,
-          name,
-          isExpanded: false,
-          parent,
-          tasks: [],
-          history: [],
-          creationDate: new Date(),
-          modificationDate: new Date(),
-        })
-      )
+      setTasks((tasks) => {
+        const tasksWithNewProject = append(
+          {
+            kind: 'Project',
+            id: maxId + 1,
+            name,
+            isExpanded: false,
+            parent,
+            tasks: [],
+            history: [],
+            creationDate: new Date(),
+            modificationDate: new Date(),
+          } as Project,
+          tasks
+        )
+        const parentExpanded = optic<Array<Project>>()
+          .find((p) => p.id === parent)
+          .prop('isExpanded')
+        return set(parentExpanded)(true)(tasksWithNewProject as Project[])
+      })
       setShowModal(false)
       setName('')
       setParent(projects[0].id)
@@ -79,7 +87,9 @@ export default function AddProject() {
               id='parent-select'
             >
               {projects.map(({ id, name }) => (
-                <MenuItem value={id}>{name}</MenuItem>
+                <MenuItem key={id} value={id}>
+                  {name}
+                </MenuItem>
               ))}
             </Select>
           </FormControl>

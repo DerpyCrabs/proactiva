@@ -32,6 +32,16 @@ export interface Note extends Task {
 export const tasksState = atom<Array<Task>>([
   {
     kind: 'Project',
+    id: 0,
+    name: 'No parent',
+    history: [],
+    parent: -1,
+    creationDate: new Date(),
+    modificationDate: new Date(),
+    isExpanded: false,
+  } as Project,
+  {
+    kind: 'Project',
     id: 1,
     name: '/',
     description: 'Root project',
@@ -39,6 +49,7 @@ export const tasksState = atom<Array<Task>>([
     creationDate: new Date(),
     modificationDate: new Date(),
     isExpanded: false,
+    parent: 0,
   } as Project,
   {
     kind: 'Todo',
