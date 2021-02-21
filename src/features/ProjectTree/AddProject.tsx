@@ -1,4 +1,3 @@
-import { useAtom } from 'jotai'
 import { useAtomValue, useUpdateAtom } from 'jotai/utils'
 import { append } from 'ramda'
 import React from 'react'
@@ -21,7 +20,7 @@ export default function AddProject() {
   const [showModal, setShowModal] = React.useState(false)
   const projects = useAtomValue(projectsState)
   const setTasks = useUpdateAtom(tasksState)
-  const [maxId] = useAtom(maxIdState)
+  const maxId = useAtomValue(maxIdState)
   const [parent, setParent] = React.useState(projects[0].id)
   const [name, setName] = React.useState('')
 
