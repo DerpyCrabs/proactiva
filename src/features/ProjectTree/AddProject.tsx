@@ -10,6 +10,7 @@ import {
   DialogTitle,
   FormControl,
   InputLabel,
+  makeStyles,
   MenuItem,
   Select,
   TextField,
@@ -17,7 +18,14 @@ import {
 import { Add } from '@material-ui/icons'
 import { Project, maxIdState, projectsState, tasksState } from '../../state'
 
+const useStyles = makeStyles({
+  buttonLabel: {
+    marginRight: '26px',
+  },
+})
+
 export default function AddProject() {
+  const classes = useStyles()
   const [showModal, setShowModal] = React.useState(false)
   const projects = useAtomValue(projectsState)
   const setTasks = useUpdateAtom(tasksState)
@@ -56,10 +64,11 @@ export default function AddProject() {
   return (
     <>
       <Button
-        style={{ marginLeft: 14, color: '#bbb' }}
+        style={{ margin: '0 -6px', color: '#bbb', flex: '1' }}
         startIcon={<Add />}
         size='small'
         onClick={(_) => setShowModal(true)}
+        classes={{ label: classes.buttonLabel }}
       >
         Add Project
       </Button>
