@@ -168,7 +168,11 @@ export default function ProjectTree() {
             : {
                 buttons: null,
                 icons: null,
-                title: <AddProject />,
+                title: (
+                  <div className='add-project'>
+                    <AddProject />
+                  </div>
+                ),
               }
         }
       />
