@@ -4,7 +4,7 @@ import './ProjectTree.css'
 import { atom } from 'jotai'
 import { useAtomValue, useUpdateAtom } from 'jotai/utils'
 import * as R from 'ramda'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useHistory } from 'react-router-dom'
 import SortableTree, {
   FlatDataItem,
   FullTree,
@@ -23,13 +23,14 @@ import {
   KeyboardArrowDown,
 } from '@material-ui/icons'
 import { makeStyles } from '@material-ui/styles'
-import { Project, projectsState } from '../../state'
+import { Id, Project, projectsState } from '../../state'
 import AddProject from './AddProject'
 import ProjectActions from './ProjectActions'
 
 const useStyles = makeStyles({
   dragHandle: {
     color: '#666',
+    marginTop: '-2px',
   },
   currentRoute: {
     fontWeight: 'bold',
@@ -60,6 +61,11 @@ export default function ProjectTree() {
 
   const tree = useAtomValue(projectTreeState)
   const setProjects = useUpdateAtom(projectsState)
+  const history = useHistory()
+
+  const openProject = (id: Id) => {
+    history.push(`/${id}`)
+  }
 
   const onVisibilityToggle = ({
     node,
@@ -105,7 +111,6 @@ export default function ProjectTree() {
         height: 'calc(100vh - 20px)',
         width: '300px',
         marginTop: '20px',
-        marginLeft: '10px',
       }}
     >
       <SortableTree
@@ -125,11 +130,20 @@ export default function ProjectTree() {
                 icons: (
                   <DragIndicator
                     className={classes.dragHandle}
-                    style={{ fontSize: 18 }}
+                    style={{ fontSize: 22 }}
                   />
                 ),
                 title: (
-                  <>
+                  <div
+                    onClick={() => openProject(rowInfo.node.id)}
+                    style={{
+                      flex: 1,
+                      display: 'flex',
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      cursor: 'pointer',
+                    }}
+                  >
                     {rowInfo.node.children === undefined ||
                     rowInfo.node.children.length === 0 ? null : rowInfo.node
                         .expanded ? (
@@ -162,13 +176,17 @@ export default function ProjectTree() {
                         {rowInfo.node.title}
                       </NavLink>
                     </Typography>
-                  </>
+                  </div>
                 ),
               }
             : {
                 buttons: null,
                 icons: null,
-                title: <AddProject />,
+                title: (
+                  <div className='add-project'>
+                    <AddProject />
+                  </div>
+                ),
               }
         }
       />
