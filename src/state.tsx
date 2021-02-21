@@ -43,8 +43,8 @@ export const tasksState = atom<Array<Task>>([
   {
     kind: 'Project',
     id: 1,
-    name: '/',
-    description: 'Root project',
+    name: 'Project 1',
+    description: 'Test project 1',
     history: [],
     creationDate: new Date(),
     modificationDate: new Date(),
@@ -67,10 +67,10 @@ export const maxIdState = atom((get) => {
   return Math.max(...tasks.map((t) => t.id))
 })
 
-export const taskState = (id: number) =>
+export const taskState = (id: Id) =>
   focusAtom(tasksState, (optic) => optic.find((t) => t.id === id))
 
-export const projectTasksState = (id: number) =>
+export const projectTasksState = (id: Id) =>
   focusAtom(tasksState, (optic) =>
     optic.filter(
       (t) => t.parent === id && (t.kind === 'Todo' || t.kind === 'Note')

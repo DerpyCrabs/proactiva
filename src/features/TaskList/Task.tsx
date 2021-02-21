@@ -2,16 +2,33 @@ import { useUpdateAtom } from 'jotai/utils'
 import { assoc, filter } from 'ramda'
 import React from 'react'
 import { Draggable } from 'react-beautiful-dnd'
-import { Checkbox, IconButton, ListItem, ListItemIcon, ListItemText, TextField, Typography } from '@material-ui/core'
-import { Delete, DragIndicator } from '@material-ui/icons'
+import {
+  Checkbox,
+  IconButton,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  TextField,
+  Typography,
+} from '@material-ui/core'
+import { Delete, DragIndicator, Edit } from '@material-ui/icons'
 import { Task, Todo, taskState, tasksState } from '../../state'
+import TaskDescription from '../TaskDescription'
 
-export default function TaskItem({ item, index }: { projectId: number; item: Todo; index: number }) {
+export default function TaskItem({
+  item,
+  index,
+}: {
+  projectId: number
+  item: Todo
+  index: number
+}) {
   const setTasks = useUpdateAtom(tasksState)
   const setTask = useUpdateAtom(taskState(item.id))
   const [hover, setHover] = React.useState(false)
   const [editing, setEditing] = React.useState(false)
   const [taskName, setTaskName] = React.useState('')
+  const [showEditModal, setShowEditModal] = React.useState(false)
 
   const changeName = () => setTask(assoc('name', taskName))
 
@@ -25,7 +42,10 @@ export default function TaskItem({ item, index }: { projectId: number; item: Tod
         <ListItem
           ref={provided.innerRef}
           {...provided.draggableProps}
-          style={getItemStyle(snapshot.isDragging, provided.draggableProps.style)}
+          style={getItemStyle(
+            snapshot.isDragging,
+            provided.draggableProps.style
+          )}
           onMouseEnter={() => setHover(true)}
           onMouseLeave={() => setHover(false)}
         >
@@ -38,7 +58,11 @@ export default function TaskItem({ item, index }: { projectId: number; item: Tod
           >
             <DragIndicator style={{ color: '#666', fontSize: 20 }} />
           </ListItemIcon>
-          <Checkbox checked={item.status} size='small' onChange={toggleCompletion} />
+          <Checkbox
+            checked={item.status}
+            size='small'
+            onChange={toggleCompletion}
+          />
           <ListItemText
             disableTypography={true}
             onClick={() => {
@@ -84,13 +108,34 @@ export default function TaskItem({ item, index }: { projectId: number; item: Tod
             style={{
               color: '#666',
               visibility: hover ? 'visible' : 'hidden',
-              padding: 6,
+              padding: 4,
+              marginRight: 0,
+            }}
+            onClick={() => setShowEditModal(true)}
+          >
+            <Edit style={{ fontSize: '1.4rem' }} />
+          </IconButton>
+          <IconButton
+            edge='end'
+            size='small'
+            style={{
+              color: '#666',
+              visibility: hover ? 'visible' : 'hidden',
+              padding: 4,
               marginRight: 0,
             }}
             onClick={onDelete}
           >
-            <Delete />
+            <Delete style={{ fontSize: '1.4rem' }} />
           </IconButton>
+          <TaskDescription
+            id={item.id}
+            isOpen={showEditModal}
+            close={() => {
+              setShowEditModal(false)
+              setHover(false)
+            }}
+          />
         </ListItem>
       )}
     </Draggable>

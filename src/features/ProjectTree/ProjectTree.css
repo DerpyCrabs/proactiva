@@ -5,15 +5,17 @@
 .MuiNodeContent-row {
   background-color: unset !important;
   cursor: unset !important;
-  padding: 0px !important;
+  padding: 0px 12px !important;
 }
 
 .MuiNodeContent-rowLabel {
-  padding: 6px !important;
+  padding: 8px !important;
+  margin-left: -12px;
+  margin-right: -12px;
 }
 
-.MuiNodeContent-contentNode:hover {
-  background-color: rgba(255, 255, 255, 0.1);
+.MuiNodeContent-row:hover {
+  background-color: rgba(255, 255, 255, 0.1) !important;
 }
 
 .MuiNodeContent-rowIcon {
@@ -26,7 +28,7 @@
 .add-project {
   display: flex;
   flex: 1;
-  margin: -6px -6px;
+  margin: -8px -8px;
 }
 
 .add-project > button {
