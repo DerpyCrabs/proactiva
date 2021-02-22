@@ -11,7 +11,7 @@ import {
   TextField,
   Typography,
 } from '@material-ui/core'
-import { Delete, DragIndicator, Edit } from '@material-ui/icons'
+import { Delete, DragIndicator, Edit, Subject } from '@material-ui/icons'
 import { Note, Task, Todo, taskState, tasksState } from '../../state'
 import TaskDescription from '../TaskDescription'
 
@@ -56,11 +56,20 @@ export default function TaskItem({
           >
             <DragIndicator style={{ color: '#666', fontSize: 20 }} />
           </ListItemIcon>
-          {item.kind === 'Todo' && (
+          {item.kind === 'Todo' ? (
             <Checkbox
               checked={item.status}
               size='small'
               onChange={() => setTask(assoc('status', !item.status))}
+            />
+          ) : (
+            <Subject
+              style={{
+                height: '40.84px',
+                width: '40.84px',
+                padding: '9px',
+                color: '#cecece',
+              }}
             />
           )}
           <ListItemText
