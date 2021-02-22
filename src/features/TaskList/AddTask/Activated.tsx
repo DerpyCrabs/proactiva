@@ -3,10 +3,12 @@ import { Button, ClickAwayListener, TextField } from '@material-ui/core'
 
 export default function Activated({
   cancel,
-  addTask,
+  addNote,
+  addTodo,
 }: {
   cancel: () => void
-  addTask: (name: string) => void
+  addNote: (name: string) => void
+  addTodo: (name: string) => void
 }) {
   const [name, setName] = React.useState('')
   return (
@@ -35,7 +37,7 @@ export default function Activated({
                   setName('')
                   cancel()
                 } else if (e.key === 'Enter') {
-                  addTask(name)
+                  addTodo(name)
                 }
                 e.preventDefault()
                 e.stopPropagation()
@@ -48,11 +50,23 @@ export default function Activated({
               size='small'
               disabled={name.length === 0}
               onClick={() => {
-                addTask(name)
+                addTodo(name)
                 setName('')
               }}
             >
-              Add Task
+              Add Todo
+            </Button>
+            <Button
+              variant='contained'
+              size='small'
+              disabled={name.length === 0}
+              style={{ marginLeft: '14px' }}
+              onClick={() => {
+                addNote(name)
+                setName('')
+              }}
+            >
+              Add Note
             </Button>
             <Button
               onClick={cancel}

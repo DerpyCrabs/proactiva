@@ -12,7 +12,7 @@ import {
   Typography,
 } from '@material-ui/core'
 import { Delete, DragIndicator, Edit } from '@material-ui/icons'
-import { Task, Todo, taskState, tasksState } from '../../state'
+import { Note, Task, Todo, taskState, tasksState } from '../../state'
 import TaskDescription from '../TaskDescription'
 
 export default function TaskItem({
@@ -20,7 +20,7 @@ export default function TaskItem({
   index,
 }: {
   projectId: number
-  item: Todo
+  item: Todo | Note
   index: number
 }) {
   const setTasks = useUpdateAtom(tasksState)
@@ -33,8 +33,6 @@ export default function TaskItem({
   const changeName = () => setTask(assoc('name', taskName))
 
   const onDelete = () => setTasks(filter<Task>((t) => t.id !== item.id))
-
-  const toggleCompletion = () => setTask(assoc('status', !item.status))
 
   return (
     <Draggable draggableId={`${item.id}`} index={index}>
@@ -58,11 +56,13 @@ export default function TaskItem({
           >
             <DragIndicator style={{ color: '#666', fontSize: 20 }} />
           </ListItemIcon>
-          <Checkbox
-            checked={item.status}
-            size='small'
-            onChange={toggleCompletion}
-          />
+          {item.kind === 'Todo' && (
+            <Checkbox
+              checked={item.status}
+              size='small'
+              onChange={() => setTask(assoc('status', !item.status))}
+            />
+          )}
           <ListItemText
             disableTypography={true}
             onClick={() => {
