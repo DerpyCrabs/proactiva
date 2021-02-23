@@ -8,12 +8,12 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
-  TextField,
   Typography,
 } from '@material-ui/core'
 import { Delete, DragIndicator, Edit } from '@material-ui/icons'
 import { Task, Todo, taskState, tasksState } from '../../state'
 import TaskDescription from '../TaskDescription'
+import Input from '../../components/Input'
 
 export default function TaskItem({
   item,
@@ -26,8 +26,7 @@ export default function TaskItem({
   const setTasks = useUpdateAtom(tasksState)
   const setTask = useUpdateAtom(taskState(item.id))
   const [hover, setHover] = React.useState(false)
-  const [editing, setEditing] = React.useState(false)
-  const [taskName, setTaskName] = React.useState('')
+  const [taskName, setTaskName] = React.useState(item.name)
   const [showEditModal, setShowEditModal] = React.useState(false)
 
   const changeName = () => setTask(assoc('name', taskName))
@@ -67,41 +66,25 @@ export default function TaskItem({
             disableTypography={true}
             onClick={() => {
               setTaskName(item.name)
-              setEditing(true)
             }}
           >
-            {editing ? (
-              <TextField
-                variant='outlined'
-                size='small'
-                autoFocus
-                style={{ width: '100%' }}
-                inputProps={{ style: { padding: '6px', fontSize: '16px' } }}
-                value={taskName}
-                onChange={(e) => setTaskName(e.target.value)}
-                onKeyUp={(e) => {
-                  if (e.key === 'Escape') {
-                    setEditing(false)
-                  } else if (e.key === 'Enter') {
-                    changeName()
-                    setEditing(false)
-                  }
-                  e.preventDefault()
-                  e.stopPropagation()
-                }}
-                onBlur={(_) => setEditing(false)}
-              />
-            ) : (
-              <Typography
-                style={{
-                  fontSize: '16px',
-                  lineHeight: '21px',
-                  color: '#eee',
-                }}
-              >
-                {item.name}
-              </Typography>
-            )}
+            <Input
+              fullWidth
+              value={taskName}
+              onChange={(e) => setTaskName(e.target.value)}
+              onKeyUp={(e) => {
+                if (e.key === 'Escape') {
+                  ;(e.target as HTMLTextAreaElement).blur()
+                } else if (e.key === 'Enter') {
+                  ;(e.target as HTMLTextAreaElement).blur()
+                }
+                e.preventDefault()
+                e.stopPropagation()
+              }}
+              onBlur={(e) => {
+                changeName()
+              }}
+            />
           </ListItemText>
           <IconButton
             edge='end'
@@ -110,6 +93,7 @@ export default function TaskItem({
               visibility: hover ? 'visible' : 'hidden',
               padding: 4,
               marginRight: 0,
+              marginLeft: 8,
             }}
             onClick={() => setShowEditModal(true)}
           >
