@@ -71,11 +71,14 @@ export const taskState = (id: Id) =>
   focusAtom(tasksState, (optic) => optic.find((t) => t.id === id))
 
 export const projectTasksState = (id: Id) =>
-  focusAtom(tasksState, (optic) =>
+  (focusAtom(tasksState, (optic) =>
     optic.filter(
       (t) => t.parent === id && (t.kind === 'Todo' || t.kind === 'Note')
     )
-  )
+  ) as unknown) as WritableAtom<
+    Array<Todo | Note>,
+    SetStateAction<Array<Todo | Note>>
+  >
 
 export const projectsState = (focusAtom(tasksState, (optic) =>
   optic.filter((t) => t.kind === 'Project')

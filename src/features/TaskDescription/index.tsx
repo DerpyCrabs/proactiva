@@ -8,6 +8,7 @@ import {
   TextField,
 } from '@material-ui/core'
 import { Id, taskState } from '../../state'
+import DescriptionEditor from './DescriptionEditor'
 
 export default function TaskDescription({
   id,
@@ -31,7 +32,9 @@ export default function TaskDescription({
       onClose={() => close()}
       aria-labelledby='form-dialog-title'
     >
-      <DialogTitle id='form-dialog-title'>Edit task</DialogTitle>
+      <DialogTitle id='form-dialog-title'>
+        Edit {task.kind.toLocaleLowerCase()} "{task.name}"
+      </DialogTitle>
       <DialogContent>
         <TextField
           autoFocus
@@ -42,16 +45,9 @@ export default function TaskDescription({
           value={task.name}
           onChange={(e) => setTask(set(lensProp('name'), e.target.value))}
         />
-        <TextField
-          autoFocus
-          margin='dense'
-          label='Description'
-          type='text'
-          fullWidth
-          value={task.description}
-          onChange={(e) =>
-            setTask(set(lensProp('description'), e.target.value))
-          }
+        <DescriptionEditor
+          description={task.description || ''}
+          setDescription={(e) => setTask(set(lensProp('description'), e))}
         />
         <DialogContentText style={{ paddingTop: '10px' }}>
           Creation date: {task.creationDate.toLocaleString()}

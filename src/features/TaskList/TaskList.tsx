@@ -3,18 +3,22 @@ import React from 'react'
 import { DragDropContext, DropResult, Droppable } from 'react-beautiful-dnd'
 import { useHistory, useParams } from 'react-router-dom'
 import { Divider, List, Typography } from '@material-ui/core'
-import { Task, Todo, projectTasksState, taskState } from '../../state'
+import { projectTasksState, taskState } from '../../state'
 import AddTask from './AddTask'
 import TaskItem from './Task'
 
-const reorder = (oldArr: Array<any>, startIndex: number, endIndex: number) => {
+function reorder<a>(
+  oldArr: Array<a>,
+  startIndex: number,
+  endIndex: number
+): Array<a> {
   let arr = oldArr.slice()
   const [removed] = arr.splice(startIndex, 1)
   arr.splice(endIndex, 0, removed)
   return arr
 }
 
-const getListStyle = (isDraggingOver: boolean) => ({
+const getListStyle = () => ({
   background: 'unset',
   padding: 0,
   maxWidth: '1000px',
@@ -70,17 +74,17 @@ export default function TaskList() {
         <div style={{ display: 'flex', flexGrow: 1 }}>
           <DragDropContext onDragEnd={onDragEnd}>
             <Droppable droppableId='droppable'>
-              {(provided, snapshot) => (
+              {(provided, _snapshot) => (
                 <List
                   {...provided.droppableProps}
                   ref={provided.innerRef}
-                  style={getListStyle(snapshot.isDraggingOver)}
+                  style={getListStyle()}
                 >
-                  {tasks.map((item: Task, index: number) => (
+                  {tasks.map((item, index) => (
                     <React.Fragment key={item.id}>
                       <TaskItem
                         projectId={project.id}
-                        item={item as Todo} /* TODO: dispatch on task type */
+                        item={item}
                         index={index}
                       />
                       <Divider />
