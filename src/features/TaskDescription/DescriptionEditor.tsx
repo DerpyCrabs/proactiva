@@ -1,3 +1,5 @@
+import './DescriptionEditor.css'
+
 import Editor from 'rich-markdown-editor'
 
 export default function DescriptionEditor({
