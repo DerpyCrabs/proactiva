@@ -8,7 +8,6 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
-  Typography,
 } from '@material-ui/core'
 import { Delete, DragIndicator, Edit, Subject } from '@material-ui/icons'
 import { Note, Task, Todo, taskState, tasksState } from '../../state'
@@ -26,10 +25,7 @@ export default function TaskItem({
   const setTasks = useUpdateAtom(tasksState)
   const setTask = useUpdateAtom(taskState(item.id))
   const [hover, setHover] = React.useState(false)
-  const [taskName, setTaskName] = React.useState(item.name)
   const [showEditModal, setShowEditModal] = React.useState(false)
-
-  const changeName = () => setTask(assoc('name', taskName))
 
   const onDelete = () => setTasks(filter<Task>((t) => t.id !== item.id))
 
@@ -71,16 +67,11 @@ export default function TaskItem({
               }}
             />
           )}
-          <ListItemText
-            disableTypography={true}
-            onClick={() => {
-              setTaskName(item.name)
-            }}
-          >
+          <ListItemText disableTypography={true}>
             <Input
               fullWidth
-              value={taskName}
-              onChange={(e) => setTaskName(e.target.value)}
+              value={item.name}
+              onChange={(e) => setTask(assoc('name', e.target.value))}
               onKeyUp={(e) => {
                 if (e.key === 'Escape') {
                   ;(e.target as HTMLTextAreaElement).blur()
@@ -89,9 +80,6 @@ export default function TaskItem({
                 }
                 e.preventDefault()
                 e.stopPropagation()
-              }}
-              onBlur={(e) => {
-                changeName()
               }}
             />
           </ListItemText>
