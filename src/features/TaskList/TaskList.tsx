@@ -6,6 +6,7 @@ import { Divider, List, Typography } from '@material-ui/core'
 import { projectTasksState, taskState } from '../../state'
 import AddTask from './AddTask'
 import TaskItem from './Task'
+import Dialog from '../../components/Dialog'
 
 function reorder<a>(
   oldArr: Array<a>,
@@ -98,6 +99,9 @@ export default function TaskList() {
           </DragDropContext>
         </div>
       </div>
+      <Dialog open={false} maxWidth={false}>
+        <Typography>KekW</Typography>
+      </Dialog>
     </div>
   )
 }

@@ -1,7 +1,6 @@
 import { useAtom } from 'jotai'
 import { lensProp, set } from 'ramda'
 import {
-  Dialog,
   DialogContent,
   DialogContentText,
   DialogTitle,
@@ -9,6 +8,7 @@ import {
 } from '@material-ui/core'
 import { Id, taskState } from '../../state'
 import DescriptionEditor from './DescriptionEditor'
+import Dialog from '../../components/Dialog'
 
 export default function TaskDescription({
   id,
