@@ -2,10 +2,11 @@ import { useAtom } from 'jotai'
 import React from 'react'
 import { DragDropContext, DropResult, Droppable } from 'react-beautiful-dnd'
 import { useHistory, useParams } from 'react-router-dom'
-import { Divider, List, Typography } from '@material-ui/core'
+import { Divider, List } from '@material-ui/core'
 import { projectTasksState, taskState } from '../../state'
 import AddTask from './AddTask'
 import TaskItem from './Task'
+import Dialog from '../../components/Dialog'
 
 function reorder<a>(
   oldArr: Array<a>,

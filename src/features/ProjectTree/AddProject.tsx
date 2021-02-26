@@ -4,7 +4,6 @@ import { append } from 'ramda'
 import React from 'react'
 import {
   Button,
-  Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
@@ -17,6 +16,7 @@ import {
 } from '@material-ui/core'
 import { Add } from '@material-ui/icons'
 import { Project, maxIdState, projectsState, tasksState } from '../../state'
+import Dialog from '../../components/Dialog'
 
 const useStyles = makeStyles({
   buttonLabel: {
