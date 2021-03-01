@@ -74,10 +74,10 @@ export default function AddProject() {
       </Button>
       <Dialog
         open={showModal}
-        onClose={(_) => setShowModal(false)}
+        onClose={() => setShowModal(false)}
         aria-labelledby='form-dialog-title'
+        title={'Add Project'}
       >
-        <DialogTitle id='form-dialog-title'>Add Project</DialogTitle>
         <DialogContent>
           <TextField
             autoFocus
