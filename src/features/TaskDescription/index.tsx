@@ -1,7 +1,6 @@
 import { useAtom } from 'jotai'
 import { lensProp, set } from 'ramda'
 import {
-  Dialog,
   DialogContent,
   DialogContentText,
   DialogTitle,
@@ -9,6 +8,7 @@ import {
 } from '@material-ui/core'
 import { Id, taskState } from '../../state'
 import DescriptionEditor from './DescriptionEditor'
+import Dialog from '../../components/Dialog'
 
 export default function TaskDescription({
   id,
@@ -31,10 +31,8 @@ export default function TaskDescription({
       open={isOpen}
       onClose={() => close()}
       aria-labelledby='form-dialog-title'
+      title={`Edit ${task.kind.toLocaleLowerCase()} "${task.name}"`}
     >
-      <DialogTitle id='form-dialog-title'>
-        Edit {task.kind.toLocaleLowerCase()} "{task.name}"
-      </DialogTitle>
       <DialogContent>
         <TextField
           autoFocus
