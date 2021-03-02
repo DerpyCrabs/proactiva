@@ -1,6 +1,7 @@
 import { WritableAtom, atom } from 'jotai'
 import { SetStateAction } from 'jotai/core/types'
 import { focusAtom } from 'jotai/optics'
+import { reduce } from 'ramda'
 
 export type Id = number
 
@@ -83,3 +84,27 @@ export const projectTasksState = (id: Id) =>
 export const projectsState = (focusAtom(tasksState, (optic) =>
   optic.filter((t) => t.kind === 'Project')
 ) as unknown) as WritableAtom<Project[], SetStateAction<Project[]>>
+
+const favoriteProjectIdsState = atom<Array<Id>>([0, 1])
+
+export const favoriteProjectsState = atom<Array<Project>, Array<Project>>(
+  (get) => {
+    const projects = get(projectsState)
+    const favoriteProjectIds = get(favoriteProjectIdsState)
+    return projects.filter((p) => favoriteProjectIds.includes(p.id))
+  },
+  (_get, set, update) => {
+    const updatedIds = update.map((t) => t.id)
+    set(favoriteProjectIdsState, updatedIds)
+    set(
+      tasksState,
+      reduce(
+        (acc, task) =>
+          updatedIds.includes(task.id)
+            ? [...acc, update.find((t) => t.id === task.id) as Project]
+            : [...acc, task],
+        [] as Array<Task>
+      )
+    )
+  }
+)
