@@ -1,15 +1,20 @@
 import {
+  Box,
   Dialog as MuiDialog,
   DialogProps,
+  DialogTitle,
+  IconButton,
   Theme,
+  Typography,
   useMediaQuery,
 } from '@material-ui/core'
 import { createStyles, useTheme, withStyles } from '@material-ui/styles'
+import CloseIcon from '@material-ui/icons/Close'
 
 const styles = (theme: Theme) =>
   createStyles({
     paper: {
-      padding: theme.spacing(1),
+      //padding: theme.spacing(1),
       width: '100%',
 
       [theme.breakpoints.up('xs')]: {
@@ -37,8 +42,11 @@ const styles = (theme: Theme) =>
 const Dialog = ({
   scroll = 'body',
   maxWidth = false,
+  onClose,
+  children,
+  title,
   ...others
-}: DialogProps) => {
+}: DialogProps & { title: String; onClose: () => void }) => {
   const theme = useTheme() as Theme
   const fullScreen = useMediaQuery(theme.breakpoints.down('xs'))
   return (
@@ -46,8 +54,19 @@ const Dialog = ({
       fullScreen={fullScreen}
       scroll={scroll}
       maxWidth={maxWidth}
+      onClose={onClose}
       {...others}
-    />
+    >
+      <DialogTitle>
+        <Box display='flex' justifyContent='space-between' alignItems='center'>
+          <Typography variant='h6'> {title}</Typography>
+          <IconButton aria-label='close' onClick={onClose} size='small'>
+            <CloseIcon fontSize='small' />
+          </IconButton>
+        </Box>
+      </DialogTitle>
+      {children}
+    </MuiDialog>
   )
 }
 

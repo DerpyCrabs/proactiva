@@ -31,10 +31,8 @@ export default function TaskDescription({
       open={isOpen}
       onClose={() => close()}
       aria-labelledby='form-dialog-title'
+      title={`Edit ${task.kind.toLocaleLowerCase()} "${task.name}"`}
     >
-      <DialogTitle id='form-dialog-title'>
-        Edit {task.kind.toLocaleLowerCase()} "{task.name}"
-      </DialogTitle>
       <DialogContent>
         <TextField
           autoFocus

@@ -130,7 +130,7 @@ export default function ProjectTree() {
                 icons: (
                   <DragIndicator
                     className={classes.dragHandle}
-                    style={{ fontSize: 22 }}
+                    style={{ fontSize: 22, marginRight: '8px' }}
                   />
                 ),
                 title: (
