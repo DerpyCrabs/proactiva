@@ -1,9 +1,10 @@
-import { Provider } from 'jotai'
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { Provider } from 'jotai'
 import { CssBaseline, ThemeProvider } from '@material-ui/core'
 import { blue } from '@material-ui/core/colors'
 import { createMuiTheme } from '@material-ui/core/styles'
+import './index.css'
 import Index from './pages/Index'
 
 const theme = createMuiTheme({
@@ -11,6 +12,9 @@ const theme = createMuiTheme({
     type: 'dark',
     primary: {
       main: blue[500],
+    },
+    background: {
+      default: '#222222',
     },
   },
   typography: {
