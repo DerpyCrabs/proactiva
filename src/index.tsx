@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom'
 import { CssBaseline, ThemeProvider } from '@material-ui/core'
 import { blue } from '@material-ui/core/colors'
 import { createMuiTheme } from '@material-ui/core/styles'
-import Index from './views/Index'
+import Index from './pages/Index'
 
 const theme = createMuiTheme({
   palette: {
