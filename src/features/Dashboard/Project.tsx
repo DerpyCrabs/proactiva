@@ -9,6 +9,7 @@ import {
   Todo,
   projectTasksState,
 } from '../../state'
+import AddTask from './AddTask'
 import Task from './Task'
 
 export default function Project({ project }: { project: ProjectType }) {
@@ -20,7 +21,6 @@ export default function Project({ project }: { project: ProjectType }) {
 
   return (
     <div>
-      <h6>{project.name}</h6>
       <Droppable key={project.id} droppableId={`${project.id}`}>
         {(provided, snapshot) => (
           <div
@@ -40,7 +40,7 @@ export default function Project({ project }: { project: ProjectType }) {
           </div>
         )}
       </Droppable>
-      <button>Add task</button>
+      <AddTask projectId={project.id} />
     </div>
   )
 }

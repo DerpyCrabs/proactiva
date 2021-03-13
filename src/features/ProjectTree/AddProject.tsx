@@ -6,17 +6,16 @@ import {
   Button,
   DialogActions,
   DialogContent,
-  DialogTitle,
   FormControl,
   InputLabel,
-  makeStyles,
   MenuItem,
   Select,
   TextField,
+  makeStyles,
 } from '@material-ui/core'
 import { Add } from '@material-ui/icons'
-import { Project, maxIdState, projectsState, tasksState } from '../../state'
 import Dialog from '../../components/Dialog'
+import { Project, maxIdState, projectsState, tasksState } from '../../state'
 
 const useStyles = makeStyles({
   buttonLabel: {
@@ -67,7 +66,7 @@ export default function AddProject() {
         style={{ margin: '0 -6px', color: '#bbb', flex: '1' }}
         startIcon={<Add />}
         size='small'
-        onClick={(_) => setShowModal(true)}
+        onClick={() => setShowModal(true)}
         classes={{ label: classes.buttonLabel }}
       >
         Add Project
