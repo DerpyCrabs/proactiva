@@ -85,7 +85,7 @@ export const projectsState = (focusAtom(tasksState, (optic) =>
   optic.filter((t) => t.kind === 'Project')
 ) as unknown) as WritableAtom<Project[], SetStateAction<Project[]>>
 
-const favoriteProjectIdsState = atom<Array<Id>>([0, 1])
+export const favoriteProjectIdsState = atom<Array<Id>>([0, 1])
 
 export const favoriteProjectsState = atom<Array<Project>, Array<Project>>(
   (get) => {

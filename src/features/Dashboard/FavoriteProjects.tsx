@@ -39,10 +39,6 @@ export default function FavoriteProjects() {
       return
     }
 
-    console.log(result)
-    console.log(
-      reorder(favoriteProjects, result.source.index, result.destination.index)
-    )
     setFavoriteProjects(
       reorder(favoriteProjects, result.source.index, result.destination.index)
     )

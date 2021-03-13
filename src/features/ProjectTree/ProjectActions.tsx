@@ -1,8 +1,10 @@
+import { useAtom } from 'jotai'
 import { useUpdateAtom } from 'jotai/utils'
+import { append, complement, equals, filter } from 'ramda'
 import React from 'react'
 import { IconButton, Menu, MenuItem, makeStyles } from '@material-ui/core'
 import { MoreHoriz } from '@material-ui/icons'
-import { projectsState } from '../../state'
+import { favoriteProjectIdsState, projectsState } from '../../state'
 import TaskDescription from '../TaskDescription'
 
 const useStyles = makeStyles({
@@ -20,11 +22,26 @@ export default function ProjectActions({ projectId }: { projectId: number }) {
   const setProjects = useUpdateAtom(projectsState)
   const [anchorEl, setAnchorEl] = React.useState(null as null | Element)
 
-  const handleDelete = () => {
+  const [favoriteProjectIds, setFavoriteProjectIds] = useAtom(
+    favoriteProjectIdsState
+  )
+
+  const closeActions = (f: () => void): (() => void) => () => {
     setAnchorEl(null)
+    f()
+  }
+
+  const handleDelete = () => {
     setProjects((projects) =>
       projects.filter((project) => project.id !== projectId)
     )
+  }
+
+  const removeFromDashboard = () => {
+    setFavoriteProjectIds(filter(complement(equals(projectId))))
+  }
+  const addToDashboard = () => {
+    setFavoriteProjectIds(append(projectId))
   }
 
   return (
@@ -43,16 +60,24 @@ export default function ProjectActions({ projectId }: { projectId: number }) {
         onClose={(_) => setAnchorEl(null)}
         MenuListProps={{ disablePadding: true }}
       >
-        <MenuItem onClick={() => setEditModalOpen(true)}>Edit</MenuItem>
-        <MenuItem onClick={handleDelete}>Delete</MenuItem>
+        <MenuItem onClick={() => setEditModalOpen(true)}>
+          Edit description
+        </MenuItem>
+        <MenuItem onClick={closeActions(handleDelete)}>Delete project</MenuItem>
+        {favoriteProjectIds.includes(projectId) ? (
+          <MenuItem onClick={closeActions(removeFromDashboard)}>
+            Remove from dashboard
+          </MenuItem>
+        ) : (
+          <MenuItem onClick={closeActions(addToDashboard)}>
+            Add to dashboard
+          </MenuItem>
+        )}
       </Menu>
       <TaskDescription
         id={projectId}
         isOpen={editModalOpen}
-        close={() => {
-          setEditModalOpen(false)
-          setAnchorEl(null)
-        }}
+        close={closeActions(() => setEditModalOpen(false))}
       />
     </>
   )
