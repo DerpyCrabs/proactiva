@@ -61,6 +61,44 @@ export const tasksState = atom<Array<Task>>([
     creationDate: new Date(),
     modificationDate: new Date(),
   } as Todo,
+  {
+    kind: 'Todo',
+    id: 4,
+    name: 'task 2',
+    status: true,
+    parent: 1,
+    creationDate: new Date(),
+    modificationDate: new Date(),
+  } as Todo,
+  {
+    kind: 'Todo',
+    id: 6,
+    name: 'task 4',
+    status: true,
+    parent: 1,
+    creationDate: new Date(),
+    modificationDate: new Date(),
+  } as Todo,
+  {
+    kind: 'Project',
+    id: 3,
+    name: 'Project 2',
+    description: 'Test project 2',
+    history: [],
+    creationDate: new Date(),
+    modificationDate: new Date(),
+    isExpanded: false,
+    parent: 0,
+  } as Project,
+  {
+    kind: 'Todo',
+    id: 5,
+    name: 'task 3',
+    status: true,
+    parent: 3,
+    creationDate: new Date(),
+    modificationDate: new Date(),
+  } as Todo,
 ])
 
 export const maxIdState = atom((get) => {
@@ -85,7 +123,7 @@ export const projectsState = (focusAtom(tasksState, (optic) =>
   optic.filter((t) => t.kind === 'Project')
 ) as unknown) as WritableAtom<Project[], SetStateAction<Project[]>>
 
-export const favoriteProjectIdsState = atom<Array<Id>>([0, 1])
+export const favoriteProjectIdsState = atom<Array<Id>>([3, 1])
 
 export const favoriteProjectsState = atom<Array<Project>, Array<Project>>(
   (get) => {
