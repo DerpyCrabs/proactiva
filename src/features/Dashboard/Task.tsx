@@ -5,9 +5,11 @@ import { Note, Todo } from '../../state'
 export default function Task({
   task,
   index,
+  deleteTask,
 }: {
   task: Todo | Note
   index: number
+  deleteTask: () => void
 }) {
   return (
     <Draggable key={task.id} draggableId={task.id.toString()} index={index}>
@@ -28,7 +30,7 @@ export default function Task({
             }}
           >
             {task.name}
-            <button type='button' onClick={() => {}}>
+            <button type='button' onClick={deleteTask}>
               delete
             </button>
           </div>

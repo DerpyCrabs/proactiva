@@ -14,9 +14,11 @@ export default function Dashboard() {
       <FavoriteProjects />
 
       <DragDropContext onDragEnd={onDragEnd}>
-        {favoriteProjects.map((project) => (
-          <Project project={project} />
-        ))}
+        <div style={{ display: 'flex', flexDirection: 'row' }}>
+          {favoriteProjects.map((project) => (
+            <Project project={project} key={project.id} />
+          ))}
+        </div>
       </DragDropContext>
     </div>
   )

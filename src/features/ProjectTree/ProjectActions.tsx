@@ -1,6 +1,6 @@
 import { useAtom } from 'jotai'
 import { useUpdateAtom } from 'jotai/utils'
-import { append, complement, equals, filter } from 'ramda'
+import { append, complement, equals, filter, propEq } from 'ramda'
 import React from 'react'
 import { IconButton, Menu, MenuItem, makeStyles } from '@material-ui/core'
 import { MoreHoriz } from '@material-ui/icons'
@@ -32,9 +32,7 @@ export default function ProjectActions({ projectId }: { projectId: number }) {
   }
 
   const handleDelete = () => {
-    setProjects((projects) =>
-      projects.filter((project) => project.id !== projectId)
-    )
+    setProjects(filter(complement(propEq('id', projectId))))
   }
 
   const removeFromDashboard = () => {
@@ -57,7 +55,7 @@ export default function ProjectActions({ projectId }: { projectId: number }) {
         anchorEl={anchorEl}
         keepMounted
         open={Boolean(anchorEl)}
-        onClose={(_) => setAnchorEl(null)}
+        onClose={closeActions(() => {})}
         MenuListProps={{ disablePadding: true }}
       >
         <MenuItem onClick={() => setEditModalOpen(true)}>
