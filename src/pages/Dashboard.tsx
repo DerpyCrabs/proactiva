@@ -1,8 +1,14 @@
-import { useAtom } from 'jotai'
-import { favoriteProjectsState } from '../state'
+import React from 'react'
+import { Typography } from '@material-ui/core'
+import DashboardFeature from '../features/Dashboard'
 
 export default function Dashboard() {
-  const [favoriteProjects, setFavoriteProjects] = useAtom(favoriteProjectsState)
-
-  return <div>{favoriteProjects.map((project) => project.name)}</div>
+  return (
+    <div>
+      <Typography variant='h5' style={{ paddingBottom: '10px' }}>
+        Dashboard
+      </Typography>
+      <DashboardFeature />
+    </div>
+  )
 }

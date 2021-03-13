@@ -1,21 +1,11 @@
-import { Divider, List } from '@material-ui/core'
 import { useAtom } from 'jotai'
 import React from 'react'
-import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd'
+import { DragDropContext, DropResult, Droppable } from 'react-beautiful-dnd'
+import { Divider, List } from '@material-ui/core'
 import { Id, projectTasksState } from '../../state'
+import { reorder } from '../../utils'
 import AddTask from './AddTask'
 import TaskItem from './Task'
-
-function reorder<a>(
-  oldArr: Array<a>,
-  startIndex: number,
-  endIndex: number
-): Array<a> {
-  let arr = oldArr.slice()
-  const [removed] = arr.splice(startIndex, 1)
-  arr.splice(endIndex, 0, removed)
-  return arr
-}
 
 const getListStyle = () => ({
   background: 'unset',

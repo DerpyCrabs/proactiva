@@ -91,7 +91,9 @@ export const favoriteProjectsState = atom<Array<Project>, Array<Project>>(
   (get) => {
     const projects = get(projectsState)
     const favoriteProjectIds = get(favoriteProjectIdsState)
-    return projects.filter((p) => favoriteProjectIds.includes(p.id))
+    return favoriteProjectIds
+      .map((id) => projects.find((p) => p.id === id))
+      .filter((p) => p !== undefined) as Array<Project>
   },
   (_get, set, update) => {
     const updatedIds = update.map((t) => t.id)
