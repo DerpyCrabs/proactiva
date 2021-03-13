@@ -5,6 +5,7 @@ import { Draggable, DraggableProvidedDraggableProps } from 'react-beautiful-dnd'
 import { Checkbox } from '@material-ui/core'
 import { Subject } from '@material-ui/icons'
 import { Note, Todo, taskState } from '../../state'
+import TaskDescription from '../TaskDescription'
 
 export default function Task({
   task,
@@ -16,6 +17,7 @@ export default function Task({
   deleteTask: () => void
 }) {
   const setTask = useUpdateAtom(taskState(task.id))
+  const [showDescriptionModal, setShowDescriptionModal] = React.useState(false)
   return (
     <Draggable key={task.id} draggableId={task.id.toString()} index={index}>
       {(provided, snapshot) => (
@@ -54,6 +56,12 @@ export default function Task({
             <button type='button' onClick={deleteTask}>
               delete
             </button>
+            <button onClick={() => setShowDescriptionModal(true)}>edit</button>
+            <TaskDescription
+              id={task.id}
+              isOpen={showDescriptionModal}
+              close={() => setShowDescriptionModal(false)}
+            />
           </div>
         </div>
       )}
