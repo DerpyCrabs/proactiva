@@ -1,6 +1,10 @@
+import { useUpdateAtom } from 'jotai/utils'
+import { assoc } from 'ramda'
 import React, { CSSProperties } from 'react'
 import { Draggable, DraggableProvidedDraggableProps } from 'react-beautiful-dnd'
-import { Note, Todo } from '../../state'
+import { Checkbox } from '@material-ui/core'
+import { Subject } from '@material-ui/icons'
+import { Note, Todo, taskState } from '../../state'
 
 export default function Task({
   task,
@@ -11,6 +15,7 @@ export default function Task({
   index: number
   deleteTask: () => void
 }) {
+  const setTask = useUpdateAtom(taskState(task.id))
   return (
     <Draggable key={task.id} draggableId={task.id.toString()} index={index}>
       {(provided, snapshot) => (
@@ -23,6 +28,22 @@ export default function Task({
             provided.draggableProps.style
           )}
         >
+          {task.kind === 'Todo' ? (
+            <Checkbox
+              checked={task.status}
+              size='small'
+              onChange={() => setTask(assoc('status', !task.status))}
+            />
+          ) : (
+            <Subject
+              style={{
+                height: '40.84px',
+                width: '40.84px',
+                padding: '9px',
+                color: '#cecece',
+              }}
+            />
+          )}
           <div
             style={{
               display: 'flex',
