@@ -1,4 +1,4 @@
-import { useAtom } from 'jotai'
+import { useAtomValue, useUpdateAtom } from 'jotai/utils'
 import React, { CSSProperties } from 'react'
 import {
   DragDropContext,
@@ -7,7 +7,7 @@ import {
   DropResult,
   Droppable,
 } from 'react-beautiful-dnd'
-import { favoriteProjectsState } from '../../state'
+import { favoriteProjectIdsState, favoriteProjectsValue } from '../../state'
 import { reorder } from '../../utils'
 
 const grid = 8
@@ -32,15 +32,18 @@ const getListStyle = (isDraggingOver: boolean) => ({
 })
 
 export default function FavoriteProjects() {
-  const [favoriteProjects, setFavoriteProjects] = useAtom(favoriteProjectsState)
+  const favoriteProjects = useAtomValue(favoriteProjectsValue)
+  const setFavoriteProjectIds = useUpdateAtom(favoriteProjectIdsState)
 
   const onDragEnd = (result: DropResult) => {
     if (!result.destination) {
       return
     }
 
-    setFavoriteProjects(
-      reorder(favoriteProjects, result.source.index, result.destination.index)
+    const destination = result.destination
+
+    setFavoriteProjectIds((favoriteProjectIds) =>
+      reorder(favoriteProjectIds, result.source.index, destination.index)
     )
   }
 

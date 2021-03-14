@@ -1,14 +1,14 @@
 import { useAtomValue, useUpdateAtom } from 'jotai/utils'
 import React from 'react'
 import { DragDropContext, DropResult } from 'react-beautiful-dnd'
-import { favoriteProjectsState, tasksState } from '../../state'
+import { favoriteProjectsValue, tasksState } from '../../state'
 import { Task } from '../../types'
 import { reorder } from '../../utils'
 import FavoriteProjects from './FavoriteProjects'
 import Project from './Project'
 
 export default function Dashboard() {
-  const favoriteProjects = useAtomValue(favoriteProjectsState)
+  const favoriteProjects = useAtomValue(favoriteProjectsValue)
   const setTasks = useUpdateAtom(tasksState)
   const onDragEnd = (result: DropResult): void => {
     if (!result.destination) {

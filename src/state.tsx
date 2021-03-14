@@ -1,8 +1,7 @@
 import { WritableAtom, atom } from 'jotai'
 import { SetStateAction } from 'jotai/core/types'
 import { focusAtom } from 'jotai/optics'
-import { reduce } from 'ramda'
-import { Id, Note, Project, Task, Todo, User } from './types'
+import { Id, Note, Project, Todo, User } from './types'
 
 const userState = atom<User>({
   email: 'mail@example.com',
@@ -109,26 +108,10 @@ export const favoriteProjectIdsState = focusAtom(userState, (optic) =>
   optic.prop('favoriteProjects')
 )
 
-export const favoriteProjectsState = atom<Array<Project>, Array<Project>>(
-  (get) => {
-    const projects = get(projectsState)
-    const favoriteProjectIds = get(favoriteProjectIdsState)
-    return favoriteProjectIds
-      .map((id) => projects.find((p) => p.id === id))
-      .filter((p) => p !== undefined) as Array<Project>
-  },
-  (_get, set, update) => {
-    const updatedIds = update.map((t) => t.id)
-    set(favoriteProjectIdsState, updatedIds)
-    set(
-      tasksState,
-      reduce(
-        (acc, task) =>
-          updatedIds.includes(task.id)
-            ? [...acc, update.find((t) => t.id === task.id) as Project]
-            : [...acc, task],
-        [] as Array<Task>
-      )
-    )
-  }
-)
+export const favoriteProjectsValue = atom<Array<Project>>((get) => {
+  const projects = get(projectsState)
+  const favoriteProjectIds = get(favoriteProjectIdsState)
+  return favoriteProjectIds
+    .map((id) => projects.find((p) => p.id === id))
+    .filter((p) => p !== undefined) as Array<Project>
+})
