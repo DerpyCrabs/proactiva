@@ -30,76 +30,90 @@ export interface Note extends Task {
   kind: 'Note'
 }
 
-export const tasksState = atom<Array<Task>>([
-  {
-    kind: 'Project',
-    id: 0,
-    name: 'No parent',
-    history: [],
-    parent: -1,
-    creationDate: new Date(),
-    modificationDate: new Date(),
-    isExpanded: false,
-  } as Project,
-  {
-    kind: 'Project',
-    id: 1,
-    name: 'Project 1',
-    description: 'Test project 1',
-    history: [],
-    creationDate: new Date(),
-    modificationDate: new Date(),
-    isExpanded: false,
-    parent: 0,
-  } as Project,
-  {
-    kind: 'Todo',
-    id: 2,
-    name: 'task 1',
-    status: true,
-    parent: 1,
-    creationDate: new Date(),
-    modificationDate: new Date(),
-  } as Todo,
-  {
-    kind: 'Todo',
-    id: 4,
-    name: 'task 2',
-    status: true,
-    parent: 1,
-    creationDate: new Date(),
-    modificationDate: new Date(),
-  } as Todo,
-  {
-    kind: 'Todo',
-    id: 6,
-    name: 'task 4',
-    status: true,
-    parent: 1,
-    creationDate: new Date(),
-    modificationDate: new Date(),
-  } as Todo,
-  {
-    kind: 'Project',
-    id: 3,
-    name: 'Project 2',
-    description: 'Test project 2',
-    history: [],
-    creationDate: new Date(),
-    modificationDate: new Date(),
-    isExpanded: false,
-    parent: 0,
-  } as Project,
-  {
-    kind: 'Todo',
-    id: 5,
-    name: 'task 3',
-    status: true,
-    parent: 3,
-    creationDate: new Date(),
-    modificationDate: new Date(),
-  } as Todo,
-])
+export interface User {
+  userAccount: string
+  userToken: null | string
+  tasks: Array<Task>
+  favoriteProjects: Array<Id>
+}
+
+const userState = atom<User>({
+  userAccount: 'mail@example.com',
+  userToken: null,
+  tasks: [
+    {
+      kind: 'Project',
+      id: 0,
+      name: 'No parent',
+      history: [],
+      parent: -1,
+      creationDate: new Date(),
+      modificationDate: new Date(),
+      isExpanded: false,
+    } as Project,
+    {
+      kind: 'Project',
+      id: 1,
+      name: 'Project 1',
+      description: 'Test project 1',
+      history: [],
+      creationDate: new Date(),
+      modificationDate: new Date(),
+      isExpanded: false,
+      parent: 0,
+    } as Project,
+    {
+      kind: 'Todo',
+      id: 2,
+      name: 'task 1',
+      status: true,
+      parent: 1,
+      creationDate: new Date(),
+      modificationDate: new Date(),
+    } as Todo,
+    {
+      kind: 'Todo',
+      id: 4,
+      name: 'task 2',
+      status: true,
+      parent: 1,
+      creationDate: new Date(),
+      modificationDate: new Date(),
+    } as Todo,
+    {
+      kind: 'Todo',
+      id: 6,
+      name: 'task 4',
+      status: true,
+      parent: 1,
+      creationDate: new Date(),
+      modificationDate: new Date(),
+    } as Todo,
+    {
+      kind: 'Project',
+      id: 3,
+      name: 'Project 2',
+      description: 'Test project 2',
+      history: [],
+      creationDate: new Date(),
+      modificationDate: new Date(),
+      isExpanded: false,
+      parent: 0,
+    } as Project,
+    {
+      kind: 'Todo',
+      id: 5,
+      name: 'task 3',
+      status: true,
+      parent: 3,
+      creationDate: new Date(),
+      modificationDate: new Date(),
+    } as Todo,
+  ],
+  favoriteProjects: [1, 3],
+})
+
+export const tasksState = focusAtom(userState, (optic) => optic.prop('tasks'))
 
 export const maxIdState = atom((get) => {
   const tasks = get(tasksState)
@@ -123,7 +137,9 @@ export const projectsState = (focusAtom(tasksState, (optic) =>
   optic.filter((t) => t.kind === 'Project')
 ) as unknown) as WritableAtom<Project[], SetStateAction<Project[]>>
 
-export const favoriteProjectIdsState = atom<Array<Id>>([3, 1])
+export const favoriteProjectIdsState = focusAtom(userState, (optic) =>
+  optic.prop('favoriteProjects')
+)
 
 export const favoriteProjectsState = atom<Array<Project>, Array<Project>>(
   (get) => {
