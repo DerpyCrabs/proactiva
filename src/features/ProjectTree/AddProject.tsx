@@ -15,7 +15,8 @@ import {
 } from '@material-ui/core'
 import { Add } from '@material-ui/icons'
 import Dialog from '../../components/Dialog'
-import { Project, maxIdState, projectsState, tasksState } from '../../state'
+import { maxIdState, projectsState, tasksState } from '../../state'
+import { Project } from '../../types'
 
 const useStyles = makeStyles({
   buttonLabel: {

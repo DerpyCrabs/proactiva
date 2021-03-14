@@ -10,7 +10,8 @@ import {
   makeStyles,
 } from '@material-ui/core'
 import { Add } from '@material-ui/icons'
-import { Id, Note, Task, Todo, maxIdState, tasksState } from '../../state'
+import { maxIdState, tasksState } from '../../state'
+import { Id, Note, Task, Todo } from '../../types'
 
 const useStyles = makeStyles({
   buttonLabel: {

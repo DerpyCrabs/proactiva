@@ -2,13 +2,8 @@ import { useAtom } from 'jotai'
 import { complement, filter, propEq } from 'ramda'
 import React from 'react'
 import { Droppable } from 'react-beautiful-dnd'
-import {
-  Id,
-  Note,
-  Project as ProjectType,
-  Todo,
-  projectTasksState,
-} from '../../state'
+import { projectTasksState } from '../../state'
+import { Id, Note, Project as ProjectType, Todo } from '../../types'
 import AddTask from './AddTask'
 import Task from './Task'
 

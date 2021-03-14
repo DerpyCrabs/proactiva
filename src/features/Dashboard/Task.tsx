@@ -4,7 +4,8 @@ import React, { CSSProperties } from 'react'
 import { Draggable, DraggableProvidedDraggableProps } from 'react-beautiful-dnd'
 import { Checkbox } from '@material-ui/core'
 import { Subject } from '@material-ui/icons'
-import { Note, Todo, taskState } from '../../state'
+import { taskState } from '../../state'
+import { Note, Todo } from '../../types'
 import TaskDescription from '../TaskDescription'
 
 export default function Task({

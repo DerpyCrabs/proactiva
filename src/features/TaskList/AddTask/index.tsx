@@ -1,7 +1,8 @@
 import { useAtomValue, useUpdateAtom } from 'jotai/utils'
 import { append } from 'ramda'
 import React from 'react'
-import { Note, Task, Todo, maxIdState, tasksState } from '../../../state'
+import { maxIdState, tasksState } from '../../../state'
+import { Note, Task, Todo } from '../../../types'
 import Activated from './Activated'
 import NotActivated from './NotActivated'
 

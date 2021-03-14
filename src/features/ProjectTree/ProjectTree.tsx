@@ -23,7 +23,8 @@ import {
   KeyboardArrowDown,
 } from '@material-ui/icons'
 import { makeStyles } from '@material-ui/styles'
-import { Id, Project, projectsState } from '../../state'
+import { projectsState } from '../../state'
+import { Id, Project } from '../../types'
 import AddProject from './AddProject'
 import ProjectActions from './ProjectActions'
 

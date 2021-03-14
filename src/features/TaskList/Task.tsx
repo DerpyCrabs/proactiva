@@ -10,9 +10,10 @@ import {
   ListItemText,
 } from '@material-ui/core'
 import { Delete, DragIndicator, Edit, Subject } from '@material-ui/icons'
-import { Note, Task, Todo, taskState, tasksState } from '../../state'
-import TaskDescription from '../TaskDescription'
 import Input from '../../components/Input'
+import { taskState, tasksState } from '../../state'
+import { Note, Task, Todo } from '../../types'
+import TaskDescription from '../TaskDescription'
 
 export default function TaskItem({
   item,

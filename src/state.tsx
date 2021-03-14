@@ -2,44 +2,12 @@ import { WritableAtom, atom } from 'jotai'
 import { SetStateAction } from 'jotai/core/types'
 import { focusAtom } from 'jotai/optics'
 import { reduce } from 'ramda'
-
-export type Id = number
-
-export interface Task {
-  id: Id
-  name: string
-  description?: string
-  creationDate: Date
-  modificationDate: Date
-  parent?: Id
-  kind: string
-}
-
-export interface Todo extends Task {
-  kind: 'Todo'
-  status: boolean
-}
-
-export interface Project extends Task {
-  kind: 'Project'
-  history: Array<{ task: Task; deleted: Date }>
-  isExpanded: boolean
-}
-
-export interface Note extends Task {
-  kind: 'Note'
-}
-
-export interface User {
-  userAccount: string
-  userToken: null | string
-  tasks: Array<Task>
-  favoriteProjects: Array<Id>
-}
+import { Id, Note, Project, Task, Todo, User } from './types'
 
 const userState = atom<User>({
-  userAccount: 'mail@example.com',
-  userToken: null,
+  email: 'mail@example.com',
+  name: 'Example user',
+  token: null,
   tasks: [
     {
       kind: 'Project',
