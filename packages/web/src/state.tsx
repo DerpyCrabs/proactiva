@@ -1,7 +1,7 @@
+import type { Id, Note, Project, Todo, User } from 'common-types'
 import { WritableAtom, atom } from 'jotai'
 import { SetStateAction } from 'jotai/core/types'
 import { focusAtom } from 'jotai/optics'
-import { Id, Note, Project, Todo, User } from './types'
 
 const userState = atom<User>({
   email: 'mail@example.com',

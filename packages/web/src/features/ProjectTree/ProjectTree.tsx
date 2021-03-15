@@ -1,6 +1,7 @@
 import 'react-sortable-tree/style.css'
 import './ProjectTree.css'
 
+import type { Id, Project } from 'common-types'
 import { atom } from 'jotai'
 import { useAtomValue, useUpdateAtom } from 'jotai/utils'
 import * as R from 'ramda'
@@ -24,7 +25,6 @@ import {
 } from '@material-ui/icons'
 import { makeStyles } from '@material-ui/styles'
 import { projectsState } from '../../state'
-import { Id, Project } from '../../types'
 import AddProject from './AddProject'
 import ProjectActions from './ProjectActions'
 

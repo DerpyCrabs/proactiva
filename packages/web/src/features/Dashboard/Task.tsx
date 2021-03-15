@@ -1,3 +1,4 @@
+import type { Note, Todo } from 'common-types'
 import { useUpdateAtom } from 'jotai/utils'
 import { assoc } from 'ramda'
 import React, { CSSProperties } from 'react'
@@ -5,7 +6,6 @@ import { Draggable, DraggableProvidedDraggableProps } from 'react-beautiful-dnd'
 import { Checkbox } from '@material-ui/core'
 import { Subject } from '@material-ui/icons'
 import { taskState } from '../../state'
-import { Note, Todo } from '../../types'
 import TaskDescription from '../TaskDescription'
 
 export default function Task({

@@ -1,3 +1,4 @@
+import type { Id, Note, Task, Todo } from 'common-types'
 import { useAtomValue, useUpdateAtom } from 'jotai/utils'
 import { append } from 'ramda'
 import React from 'react'
@@ -11,7 +12,6 @@ import {
 } from '@material-ui/core'
 import { Add } from '@material-ui/icons'
 import { maxIdState, tasksState } from '../../state'
-import { Id, Note, Task, Todo } from '../../types'
 
 const useStyles = makeStyles({
   buttonLabel: {

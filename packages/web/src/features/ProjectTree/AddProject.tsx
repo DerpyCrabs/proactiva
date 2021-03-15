@@ -1,3 +1,4 @@
+import type { Project } from 'common-types'
 import { useAtomValue, useUpdateAtom } from 'jotai/utils'
 import { optic, set } from 'optics-ts'
 import { append } from 'ramda'
@@ -16,7 +17,6 @@ import {
 import { Add } from '@material-ui/icons'
 import Dialog from '../../components/Dialog'
 import { maxIdState, projectsState, tasksState } from '../../state'
-import { Project } from '../../types'
 
 const useStyles = makeStyles({
   buttonLabel: {
