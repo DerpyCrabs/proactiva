@@ -5,6 +5,7 @@
     "packages/*"
   ],
   "scripts": {
-    "start-web": "yarn workspace proactiva-web start"
+    "start-web": "yarn workspace proactiva-web start",
+    "start-server": "yarn workspace proactiva-server start"
   }
 }
