@@ -1,11 +1,13 @@
+import './index.css'
+
+import { Provider } from 'jotai'
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { Provider } from 'jotai'
 import { CssBaseline, ThemeProvider } from '@material-ui/core'
 import { blue } from '@material-ui/core/colors'
 import { createMuiTheme } from '@material-ui/core/styles'
-import './index.css'
 import Index from './pages/Index'
+import * as ServiceWorkerRegistration from './serviceWorkerRegistration'
 
 const theme = createMuiTheme({
   palette: {
@@ -36,3 +38,5 @@ ReactDOM.render(
   </React.StrictMode>,
   document.getElementById('root')
 )
+
+ServiceWorkerRegistration.register()
