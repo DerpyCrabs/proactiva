@@ -1,84 +1,41 @@
-import type { Id, Note, Project, Todo, User } from 'common-types'
+import axios from 'axios'
+import type { Id, NetworkState, Note, Project, Todo } from 'common-types'
 import { WritableAtom, atom } from 'jotai'
 import { SetStateAction } from 'jotai/core/types'
 import { focusAtom } from 'jotai/optics'
 
-const userState = atom<User>({
-  email: 'mail@example.com',
-  name: 'Example user',
-  token: null,
-  tasks: [
-    {
-      kind: 'Project',
-      id: 0,
-      name: 'No parent',
-      history: [],
-      parent: -1,
-      creationDate: new Date(),
-      modificationDate: new Date(),
-      isExpanded: false,
-    } as Project,
-    {
-      kind: 'Project',
-      id: 1,
-      name: 'Project 1',
-      description: 'Test project 1',
-      history: [],
-      creationDate: new Date(),
-      modificationDate: new Date(),
-      isExpanded: false,
-      parent: 0,
-    } as Project,
-    {
-      kind: 'Todo',
-      id: 2,
-      name: 'task 1',
-      status: true,
-      parent: 1,
-      creationDate: new Date(),
-      modificationDate: new Date(),
-    } as Todo,
-    {
-      kind: 'Todo',
-      id: 4,
-      name: 'task 2',
-      status: true,
-      parent: 1,
-      creationDate: new Date(),
-      modificationDate: new Date(),
-    } as Todo,
-    {
-      kind: 'Todo',
-      id: 6,
-      name: 'task 4',
-      status: true,
-      parent: 1,
-      creationDate: new Date(),
-      modificationDate: new Date(),
-    } as Todo,
-    {
-      kind: 'Project',
-      id: 3,
-      name: 'Project 2',
-      description: 'Test project 2',
-      history: [],
-      creationDate: new Date(),
-      modificationDate: new Date(),
-      isExpanded: false,
-      parent: 0,
-    } as Project,
-    {
-      kind: 'Todo',
-      id: 5,
-      name: 'task 3',
-      status: true,
-      parent: 3,
-      creationDate: new Date(),
-      modificationDate: new Date(),
-    } as Todo,
-  ],
-  favoriteProjects: [1, 3],
-})
+const networkState = atom<NetworkState, SetStateAction<NetworkState>>(
+  async (_get) => {
+    const data = localStorage.getItem('data')
+    if (!data) {
+      const data = await axios.get('http://localhost:4200/1')
+      const user = await data.data
+      const newState: NetworkState = {
+        currentUserData: user,
+        lastTimeSuccessfullyUpdated: new Date(),
+      }
+      localStorage.setItem('data', JSON.stringify(newState))
+      return newState
+    } else {
+      const state = JSON.parse(data)
+      return state
+    }
+  },
+  async (get, set, setAction) => {
+    let newState
+    if (typeof setAction === 'function') {
+      newState = setAction(get(networkState))
+    } else {
+      newState = setAction
+    }
+    localStorage.setItem('data', JSON.stringify(newState))
+    set(networkState, newState)
+  }
+)
+
+const userState = focusAtom(networkState, (optic) =>
+  optic.prop('currentUserData')
+)
 
 export const tasksState = focusAtom(userState, (optic) => optic.prop('tasks'))
 

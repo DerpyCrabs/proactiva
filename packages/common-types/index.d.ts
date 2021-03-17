@@ -28,7 +28,11 @@ export interface Note extends Task {
 export interface User {
   email: string
   name: string
-  token: null | string
   tasks: Array<Task>
   favoriteProjects: Array<Id>
+}
+
+export interface NetworkState {
+  lastTimeSuccessfullyUpdated?: Date
+  currentUserData: User
 }

@@ -1,7 +1,7 @@
 import './index.css'
 
 import { Provider } from 'jotai'
-import React from 'react'
+import React, { Suspense } from 'react'
 import ReactDOM from 'react-dom'
 import { CssBaseline, ThemeProvider } from '@material-ui/core'
 import { blue } from '@material-ui/core/colors'
@@ -31,7 +31,9 @@ ReactDOM.render(
     <ThemeProvider theme={theme}>
       <CssBaseline>
         <Provider>
-          <Index />
+          <Suspense fallback={<div>loading...</div>}>
+            <Index />
+          </Suspense>
         </Provider>
       </CssBaseline>
     </ThemeProvider>
