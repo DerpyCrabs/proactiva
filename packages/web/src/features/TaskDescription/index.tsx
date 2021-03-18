@@ -1,6 +1,7 @@
 import type { Id } from 'common-types'
 import { useAtom } from 'jotai'
 import { lensProp, set } from 'ramda'
+import React from 'react'
 import { DialogContent, DialogContentText, TextField } from '@material-ui/core'
 import Dialog from '../../components/Dialog'
 import { taskState } from '../../state'

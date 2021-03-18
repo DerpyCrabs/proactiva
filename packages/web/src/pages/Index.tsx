@@ -1,20 +1,21 @@
+import clsx from 'clsx'
+import { useState } from 'react'
+import React from 'react'
+import { Route, BrowserRouter as Router, Switch } from 'react-router-dom'
 import {
   AppBar,
   Box,
   Drawer,
   Hidden,
   IconButton,
-  makeStyles,
   SwipeableDrawer,
   Theme,
   Toolbar,
+  makeStyles,
   useMediaQuery,
 } from '@material-ui/core'
-import clsx from 'clsx'
 import CloseIcon from '@material-ui/icons/Close'
 import MenuIcon from '@material-ui/icons/Menu'
-import { useState } from 'react'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import ProjectTree from '../features/ProjectTree/ProjectTree'
 import Dashboard from './Dashboard'
 import TaskList from './TaskList'

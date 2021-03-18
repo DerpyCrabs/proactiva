@@ -5,6 +5,7 @@ import type { Id, Project } from 'common-types'
 import { atom } from 'jotai'
 import { useAtomValue, useUpdateAtom } from 'jotai/utils'
 import * as R from 'ramda'
+import React from 'react'
 import { NavLink, useHistory } from 'react-router-dom'
 import SortableTree, {
   FlatDataItem,

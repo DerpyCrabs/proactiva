@@ -1,15 +1,16 @@
+import React from 'react'
 import {
   Box,
-  Dialog as MuiDialog,
   DialogProps,
   DialogTitle,
   IconButton,
+  Dialog as MuiDialog,
   Theme,
   Typography,
   useMediaQuery,
 } from '@material-ui/core'
-import { createStyles, useTheme, withStyles } from '@material-ui/styles'
 import CloseIcon from '@material-ui/icons/Close'
+import { createStyles, useTheme, withStyles } from '@material-ui/styles'
 
 const styles = (theme: Theme) =>
   createStyles({
