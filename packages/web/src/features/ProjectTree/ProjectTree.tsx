@@ -17,7 +17,7 @@ import SortableTree, {
 } from 'react-sortable-tree'
 //@ts-ignore
 import MaterialTheme from 'react-sortable-tree-theme-material-ui'
-import { Typography } from '@material-ui/core'
+import { Theme, Typography } from '@material-ui/core'
 import {
   ChevronRight,
   DragIndicator,
@@ -28,7 +28,17 @@ import { projectsState } from '../../state'
 import AddProject from './AddProject'
 import ProjectActions from './ProjectActions'
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme: Theme) => ({
+  root: {
+    width: '300px',
+    marginTop: '84px',
+    height: 'calc(100vh - 84px)', // mt = 20 + appbarHeight = 64
+
+    [theme.breakpoints.down('xs')]: {
+      marginTop: '68px',
+      height: 'calc(100vh - 68px)', // mt = 20 + appbarHeight = 48
+    },
+  },
   dragHandle: {
     color: '#666',
     marginTop: '-2px',
@@ -36,7 +46,7 @@ const useStyles = makeStyles({
   currentRoute: {
     fontWeight: 'bold',
   },
-})
+}))
 
 export const projectTreeState = atom((get) => {
   const projects = get(projectsState).map((project) => ({
@@ -107,13 +117,7 @@ export default function ProjectTree() {
   }
 
   return (
-    <div
-      style={{
-        height: 'calc(100vh - 20px)',
-        width: '300px',
-        marginTop: '20px',
-      }}
-    >
+    <div className={classes.root}>
       <SortableTree
         treeData={tree}
         onChange={() => {}}
