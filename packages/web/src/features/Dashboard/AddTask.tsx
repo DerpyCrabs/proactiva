@@ -68,7 +68,7 @@ export default function AddTask({ projectId }: { projectId: Id }) {
         open={showModal}
         onClose={() => setShowModal(false)}
         aria-labelledby='form-dialog-title'
-        title={'Add Project'}
+        title={'Add Task'}
       >
         <DialogContent>
           <TextField

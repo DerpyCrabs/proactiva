@@ -1,5 +1,6 @@
 import './DescriptionEditor.css'
 
+import React from 'react'
 import Editor from 'rich-markdown-editor'
 
 export default function DescriptionEditor({
