@@ -1,15 +1,19 @@
-import { Toolbar, IconButton, AppBar as MuiAppBar, useMediaQuery, Theme, makeStyles } from "@material-ui/core"
+import { Toolbar, IconButton, AppBar as MuiAppBar, useMediaQuery, Theme, makeStyles, Typography } from "@material-ui/core"
 import { useEffect } from "react"
 import CloseIcon from '@material-ui/icons/Close'
 import MenuIcon from '@material-ui/icons/Menu'
 import { drawerState } from "../../state"
 import { useAtom } from "jotai" 
 import React from 'react'
+import SyncState from "./SyncState"
 
 const useStyles = makeStyles((theme: Theme) => ({
   appbar: {
     backgroundColor: theme.palette.background.paper,
     boxShadow: '0 1px 3px 0 rgb(0 0 0 / 15%)',
+  },
+  title: {
+    flexGrow: 1,
   }
 }))
 
@@ -35,6 +39,8 @@ export default function AppBar() {
           <MenuIcon fontSize={isMobile ? 'small' : 'default'} />
         )}
       </IconButton>
+      <Typography variant="h6" className={classes.title}>Proactiva</Typography>
+      <SyncState />
     </Toolbar>
   </MuiAppBar>
   )

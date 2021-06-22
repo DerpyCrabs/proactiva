@@ -1,8 +1,9 @@
 import axios from 'axios'
 import type { Id, NetworkState, Note, Project, Todo } from 'common-types'
-import { WritableAtom, atom } from 'jotai'
+import { WritableAtom, atom, useAtom } from 'jotai'
 import { SetStateAction } from 'jotai/core/types'
 import { focusAtom } from 'jotai/optics'
+import { useCallback } from 'react'
 
 const networkState = atom<NetworkState, SetStateAction<NetworkState>>(
   async (_get) => {
@@ -18,7 +19,7 @@ const networkState = atom<NetworkState, SetStateAction<NetworkState>>(
       return newState
     } else {
       const state = JSON.parse(data)
-      return state
+      return {...state, lastTimeSuccessfullyUpdated: new Date(state.lastTimeSuccessfullyUpdated)}
     }
   },
   async (get, set, setAction) => {
@@ -32,6 +33,28 @@ const networkState = atom<NetworkState, SetStateAction<NetworkState>>(
     set(networkState, newState)
   }
 )
+
+export function useForceSync() {
+  const [state, setState] = useAtom(networkState)
+  const forceSync = useCallback(() => {
+    const currentDate = new Date()
+    axios.post('http://localhost:4200/1', state.currentUserData)
+      .then(() => {
+        setState(state => ({
+          ...state, lastTimeSuccessfullyUpdated: currentDate
+        }))
+      })
+      .catch(err => {
+        console.log(`Failed to sync user data: ${err}`)
+      })
+  }, [state, setState])
+  return forceSync
+}
+
+export const lastSyncTimeState = atom(get => {
+  const network = get(networkState)
+  return network.lastTimeSuccessfullyUpdated
+})
 
 const userState = focusAtom(networkState, (optic) =>
   optic.prop('currentUserData')
