@@ -72,3 +72,5 @@ export const favoriteProjectsValue = atom<Array<Project>>((get) => {
     .map((id) => projects.find((p) => p.id === id))
     .filter((p) => p !== undefined) as Array<Project>
 })
+
+export const drawerState = atom(false)

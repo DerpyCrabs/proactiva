@@ -1,24 +1,21 @@
 import clsx from 'clsx'
-import { useState } from 'react'
-import React from 'react'
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom'
 import {
-  AppBar,
   Box,
   Drawer,
   Hidden,
-  IconButton,
   SwipeableDrawer,
   Theme,
-  Toolbar,
   makeStyles,
   useMediaQuery,
 } from '@material-ui/core'
-import CloseIcon from '@material-ui/icons/Close'
-import MenuIcon from '@material-ui/icons/Menu'
 import ProjectTree from '../features/ProjectTree/ProjectTree'
 import Dashboard from './Dashboard'
 import TaskList from './TaskList'
+import AppBar from '../features/AppBar'
+import { useAtom } from 'jotai'
+import { drawerState } from '../state'
+import React from 'react'
 
 const drawerWidth = '300px'
 
@@ -67,24 +64,11 @@ const useStyles = makeStyles((theme: Theme) => ({
 export default function Index() {
   const classes = useStyles({ drawerWidth })
   const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('xs'))
-  const [drawer, setDrawer] = useState(!isMobile)
+  const [drawer, setDrawer] = useAtom(drawerState)
 
   return (
     <Router>
-      <AppBar className={classes.appbar} position='fixed' elevation={1}>
-        <Toolbar>
-          <IconButton
-            size={isMobile ? 'small' : 'medium'}
-            onClick={() => setDrawer((prev) => !prev)}
-          >
-            {isMobile && drawer ? (
-              <CloseIcon fontSize={isMobile ? 'small' : 'default'} />
-            ) : (
-              <MenuIcon fontSize={isMobile ? 'small' : 'default'} />
-            )}
-          </IconButton>
-        </Toolbar>
-      </AppBar>
+      <AppBar />
 
       <Box display='flex'>
         {/* Drawer for mobile */}
