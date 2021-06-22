@@ -21,8 +21,13 @@ const useStyles = makeStyles((theme: Theme) => ({
     backgroundColor: theme.palette.background.paper,
     boxShadow: '0 1px 3px 0 rgb(0 0 0 / 15%)',
   },
-  title: {
+  pageName: {
     flexGrow: 1,
+    textAlign: 'center',
+    paddingLeft: '150px',
+    color: '#999',
+    fontWeight: 'bold',
+    fontSize: '1.3rem'
   },
 }))
 
@@ -48,13 +53,16 @@ export default function AppBar() {
             <MenuIcon fontSize={isMobile ? 'small' : 'default'} />
           )}
         </IconButton>
-        <Typography variant='h6' className={classes.title}>
+        <Typography variant='h6'>
           <NavLink
             to='/'
             style={{ color: 'unset', textDecoration: 'none' }}
           >
             Proactiva
           </NavLink>
+        </Typography>
+        <Typography className={classes.pageName}>
+          Project 1
         </Typography>
         <SyncState />
       </Toolbar>
