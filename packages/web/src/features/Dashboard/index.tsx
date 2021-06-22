@@ -26,13 +26,6 @@ const getItemStyle = (
     ...draggableStyle,
   } as CSSProperties)
 
-const getListStyle = (isDraggingOver: boolean) => ({
-  background: isDraggingOver ? 'lightblue' : 'lightgrey',
-  display: 'flex',
-  padding: grid,
-  overflow: 'auto',
-})
-
 export default function Dashboard() {
   const favoriteProjects = useAtomValue(favoriteProjectsValue)
   const setTasks = useUpdateAtom(tasksState)
@@ -72,7 +65,11 @@ export default function Dashboard() {
           {(provided, snapshot) => (
             <div
               ref={provided.innerRef}
-              style={getListStyle(snapshot.isDraggingOver)}
+              style={{
+                  display: 'flex',
+                  padding: grid,
+                  overflow: 'auto',
+              }}
               {...provided.droppableProps}
             >
               {favoriteProjects.map((project, index) => (

@@ -4,7 +4,10 @@ import DashboardFeature from '../features/Dashboard'
 
 export default function Dashboard() {
   return (
-    <div>
+    <div style={{
+      paddingTop: '32px',
+      paddingLeft: '45px'
+    }}>
       <Typography variant='h5' style={{ paddingBottom: '10px' }}>
         Dashboard
       </Typography>
