@@ -1,41 +1,105 @@
 import type { Task } from 'common-types'
 import { useAtomValue, useUpdateAtom } from 'jotai/utils'
-import React from 'react'
-import { DragDropContext, DropResult } from 'react-beautiful-dnd'
-import { favoriteProjectsValue, tasksState } from '../../state'
+import React, { CSSProperties } from 'react'
+import {
+  DragDropContext,
+  Draggable,
+  DraggableProvidedDraggableProps,
+  Droppable,
+  DropResult,
+} from 'react-beautiful-dnd'
+import { favoriteProjectIdsState, favoriteProjectsValue, tasksState } from '../../state'
 import { reorder } from '../../utils'
-import FavoriteProjects from './FavoriteProjects'
 import Project from './Project'
+
+const grid = 8
+
+const getItemStyle = (
+  isDragging: boolean,
+  draggableStyle: DraggableProvidedDraggableProps['style']
+) =>
+  ({
+    userSelect: 'none',
+    padding: grid * 2,
+    margin: `0 ${grid}px 0 0`,
+    background: isDragging ? 'lightgreen' : 'grey',
+    ...draggableStyle,
+  } as CSSProperties)
+
+const getListStyle = (isDraggingOver: boolean) => ({
+  background: isDraggingOver ? 'lightblue' : 'lightgrey',
+  display: 'flex',
+  padding: grid,
+  overflow: 'auto',
+})
 
 export default function Dashboard() {
   const favoriteProjects = useAtomValue(favoriteProjectsValue)
   const setTasks = useUpdateAtom(tasksState)
+  const setFavoriteProjectIds = useUpdateAtom(favoriteProjectIdsState)
+
   const onDragEnd = (result: DropResult): void => {
     if (!result.destination) {
       return
     }
 
-    setTasks((tasks) => {
-      const sourceId = Number(result.source.droppableId)
-      const destinationId = Number(result.destination?.droppableId)
-      if (sourceId === destinationId) {
-        return reorderSameProject(result, tasks)
-      } else {
-        return reorderDifferentProjects(result, tasks)
-      }
-    })
+    if (result.type === 'project') {
+      const destination = result.destination
+      setFavoriteProjectIds((favoriteProjectIds) =>
+        reorder(favoriteProjectIds, result.source.index, destination.index)
+      )
+    } else {
+      setTasks((tasks) => {
+        const sourceId = Number(result.source.droppableId)
+        const destinationId = Number(result.destination?.droppableId)
+        if (sourceId === destinationId) {
+          return reorderSameProject(result, tasks)
+        } else {
+          return reorderDifferentProjects(result, tasks)
+        }
+      })
+    }    
   }
 
   return (
     <div>
-      <FavoriteProjects />
-
       <DragDropContext onDragEnd={onDragEnd}>
-        <div style={{ display: 'flex', flexDirection: 'row' }}>
-          {favoriteProjects.map((project) => (
-            <Project project={project} key={project.id} />
-          ))}
-        </div>
+        <Droppable
+          droppableId='project'
+          direction='horizontal'
+          type='project'
+        >
+          {(provided, snapshot) => (
+            <div
+              ref={provided.innerRef}
+              style={getListStyle(snapshot.isDraggingOver)}
+              {...provided.droppableProps}
+            >
+              {favoriteProjects.map((project, index) => (
+                <Draggable
+                  key={project.id}
+                  draggableId={`project-${project.id.toString()}`}
+                  index={index}
+                >
+                  {(provided, snapshot) => (
+                    <div
+                      ref={provided.innerRef}
+                      {...provided.draggableProps}
+                      {...provided.dragHandleProps}
+                      style={getItemStyle(
+                        snapshot.isDragging,
+                        provided.draggableProps.style
+                      )}
+                    >
+                      <Project project={project} key={project.id} />
+                    </div>
+                  )}
+                </Draggable>
+              ))}
+              {provided.placeholder}
+            </div>
+          )}
+        </Droppable>
       </DragDropContext>
     </div>
   )

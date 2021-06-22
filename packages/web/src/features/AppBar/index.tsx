@@ -1,11 +1,20 @@
-import { Toolbar, IconButton, AppBar as MuiAppBar, useMediaQuery, Theme, makeStyles, Typography } from "@material-ui/core"
-import { useEffect } from "react"
+import {
+  Toolbar,
+  IconButton,
+  AppBar as MuiAppBar,
+  useMediaQuery,
+  Theme,
+  makeStyles,
+  Typography,
+} from '@material-ui/core'
+import { useEffect } from 'react'
 import CloseIcon from '@material-ui/icons/Close'
 import MenuIcon from '@material-ui/icons/Menu'
-import { drawerState } from "../../state"
-import { useAtom } from "jotai" 
+import { drawerState } from '../../state'
+import { useAtom } from 'jotai'
 import React from 'react'
-import SyncState from "./SyncState"
+import SyncState from './SyncState'
+import { NavLink } from 'react-router-dom'
 
 const useStyles = makeStyles((theme: Theme) => ({
   appbar: {
@@ -14,7 +23,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   title: {
     flexGrow: 1,
-  }
+  },
 }))
 
 export default function AppBar() {
@@ -28,20 +37,27 @@ export default function AppBar() {
 
   return (
     <MuiAppBar className={classes.appbar} position='fixed' elevation={1}>
-    <Toolbar>
-      <IconButton
-        size={isMobile ? 'small' : 'medium'}
-        onClick={() => setDrawer((prev) => !prev)}
-      >
-        {isMobile && drawer ? (
-          <CloseIcon fontSize={isMobile ? 'small' : 'default'} />
-        ) : (
-          <MenuIcon fontSize={isMobile ? 'small' : 'default'} />
-        )}
-      </IconButton>
-      <Typography variant="h6" className={classes.title}>Proactiva</Typography>
-      <SyncState />
-    </Toolbar>
-  </MuiAppBar>
+      <Toolbar>
+        <IconButton
+          size={isMobile ? 'small' : 'medium'}
+          onClick={() => setDrawer((prev) => !prev)}
+        >
+          {isMobile && drawer ? (
+            <CloseIcon fontSize={isMobile ? 'small' : 'default'} />
+          ) : (
+            <MenuIcon fontSize={isMobile ? 'small' : 'default'} />
+          )}
+        </IconButton>
+        <Typography variant='h6' className={classes.title}>
+          <NavLink
+            to='/'
+            style={{ color: 'unset', textDecoration: 'none' }}
+          >
+            Proactiva
+          </NavLink>
+        </Typography>
+        <SyncState />
+      </Toolbar>
+    </MuiAppBar>
   )
 }

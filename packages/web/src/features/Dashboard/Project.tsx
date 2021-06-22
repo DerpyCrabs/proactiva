@@ -1,3 +1,4 @@
+import { Typography } from '@material-ui/core'
 import type { Id, Note, Project as ProjectType, Todo } from 'common-types'
 import { useAtom } from 'jotai'
 import { complement, filter, propEq } from 'ramda'
@@ -16,6 +17,9 @@ export default function Project({ project }: { project: ProjectType }) {
 
   return (
     <div>
+      <Typography variant='h6'>
+        {project.name}
+      </Typography>
       <Droppable key={project.id} droppableId={`${project.id}`}>
         {(provided, snapshot) => (
           <div
