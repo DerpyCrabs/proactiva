@@ -11,6 +11,7 @@ import TaskItem from './Task'
 const getListStyle = () => ({
   background: 'unset',
   padding: 0,
+  // TODO use theme breakpoint
   maxWidth: '1000px',
   flexGrow: 1,
 })

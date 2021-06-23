@@ -4,11 +4,13 @@ import { useHistory, useParams } from 'react-router-dom'
 import { Typography } from '@material-ui/core'
 import TaskList from '../features/TaskList/TaskList'
 import { taskState } from '../state'
+import { useIsMobile } from '../utils'
 
 const PageTaskList = () => {
   let { id } = useParams() as { id: string }
   const [project] = useAtom(taskState(parseInt(id)))
   const history = useHistory()
+  const isMobile = useIsMobile()
 
   if (project === undefined) {
     history.push('/')
@@ -35,9 +37,11 @@ const PageTaskList = () => {
             paddingLeft: '45px',
           }}
         >
-          <Typography variant='h5' style={{ paddingBottom: '10px' }}>
-            {project.name}
-          </Typography>
+          {isMobile && (
+            <Typography variant='h5' style={{ paddingBottom: '10px' }}>
+              {project.name}
+            </Typography>
+          )}
           <TaskList projectId={project.id} />
         </div>
       </div>

@@ -7,10 +7,10 @@ import {
   Dialog as MuiDialog,
   Theme,
   Typography,
-  useMediaQuery,
 } from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close'
-import { createStyles, useTheme, withStyles } from '@material-ui/styles'
+import { createStyles, withStyles } from '@material-ui/styles'
+import { useIsMobile } from '../utils'
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -48,8 +48,8 @@ const Dialog = ({
   title,
   ...others
 }: DialogProps & { title: String; onClose: () => void }) => {
-  const theme = useTheme() as Theme
-  const fullScreen = useMediaQuery(theme.breakpoints.down('xs'))
+
+  const fullScreen = useIsMobile()
   return (
     <MuiDialog
       fullScreen={fullScreen}

@@ -1,3 +1,5 @@
+import { Theme, useMediaQuery } from '@material-ui/core'
+
 export function reorder<a>(
   oldArr: Array<a>,
   startIndex: number,
@@ -8,7 +10,6 @@ export function reorder<a>(
   arr.splice(endIndex, 0, removed)
   return arr
 }
-
 
 const MINUTE = 60,
   HOUR = MINUTE * 60,
@@ -23,23 +24,25 @@ export function formatDateRelativeToNow(date: Date) {
   let unit = null
 
   if (secondsAgo < MINUTE) {
-    return secondsAgo + " seconds ago"
+    return secondsAgo + ' seconds ago'
   } else if (secondsAgo < HOUR) {
-    [divisor, unit] = [MINUTE, 'minute']
+    ;[divisor, unit] = [MINUTE, 'minute']
   } else if (secondsAgo < DAY) {
-    [divisor, unit] = [HOUR, 'hour']
+    ;[divisor, unit] = [HOUR, 'hour']
   } else if (secondsAgo < WEEK) {
-    [divisor, unit] = [DAY, 'day']
+    ;[divisor, unit] = [DAY, 'day']
   } else if (secondsAgo < MONTH) {
-    [divisor, unit] = [WEEK, 'week']
+    ;[divisor, unit] = [WEEK, 'week']
   } else if (secondsAgo < YEAR) {
-    [divisor, unit] = [MONTH, 'month']
+    ;[divisor, unit] = [MONTH, 'month']
   } else {
-    [divisor, unit] = [YEAR, 'year']
+    ;[divisor, unit] = [YEAR, 'year']
   }
 
   const count = Math.floor(secondsAgo / divisor)
-  return  `${count} ${unit}${(count > 1)?'s':''} ago`
+  return `${count} ${unit}${count > 1 ? 's' : ''} ago`
 }
 
-
+export function useIsMobile(): boolean {
+  return useMediaQuery((theme: Theme) => theme.breakpoints.down('xs'))
+}

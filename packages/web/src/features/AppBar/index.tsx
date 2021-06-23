@@ -2,7 +2,6 @@ import {
   Toolbar,
   IconButton,
   AppBar as MuiAppBar,
-  useMediaQuery,
   Theme,
   makeStyles,
   Typography,
@@ -15,6 +14,7 @@ import { useAtom } from 'jotai'
 import React from 'react'
 import SyncState from './SyncState'
 import { NavLink } from 'react-router-dom'
+import { useIsMobile } from '../../utils'
 
 const useStyles = makeStyles((theme: Theme) => ({
   appbar: {
@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 export default function AppBar() {
   const classes = useStyles()
-  const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('xs'))
+  const isMobile = useIsMobile()
   const [drawer, setDrawer] = useAtom(drawerState)
 
   useEffect(() => {
@@ -61,9 +61,11 @@ export default function AppBar() {
             Proactiva
           </NavLink>
         </Typography>
-        <Typography className={classes.pageName}>
-          Project 1
-        </Typography>
+        {!isMobile &&
+          <Typography className={classes.pageName}>
+            Project 1
+          </Typography>
+        }
         <SyncState />
       </Toolbar>
     </MuiAppBar>

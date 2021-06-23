@@ -7,7 +7,6 @@ import {
   SwipeableDrawer,
   Theme,
   makeStyles,
-  useMediaQuery,
 } from '@material-ui/core'
 import ProjectTree from '../features/ProjectTree/ProjectTree'
 import Dashboard from './Dashboard'
@@ -16,6 +15,7 @@ import AppBar from '../features/AppBar'
 import { useAtom } from 'jotai'
 import { drawerState } from '../state'
 import React from 'react'
+import { useIsMobile } from '../utils'
 
 const drawerWidth = '300px'
 
@@ -63,7 +63,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 export default function Index() {
   const classes = useStyles({ drawerWidth })
-  const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('xs'))
+  const isMobile = useIsMobile()
   const [drawer, setDrawer] = useAtom(drawerState)
 
   return (
