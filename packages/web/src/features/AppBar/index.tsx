@@ -9,7 +9,7 @@ import {
 import { useEffect } from 'react'
 import CloseIcon from '@material-ui/icons/Close'
 import MenuIcon from '@material-ui/icons/Menu'
-import { drawerState } from '../../state'
+import { drawerState, usePageTitle } from '../../state'
 import { useAtom } from 'jotai'
 import React from 'react'
 import SyncState from './SyncState'
@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     paddingLeft: '150px',
     color: '#999',
     fontWeight: 'bold',
-    fontSize: '1.3rem'
+    fontSize: '1.3rem',
   },
 }))
 
@@ -35,6 +35,7 @@ export default function AppBar() {
   const classes = useStyles()
   const isMobile = useIsMobile()
   const [drawer, setDrawer] = useAtom(drawerState)
+  const pageTitle = usePageTitle()
 
   useEffect(() => {
     setDrawer(!isMobile)
@@ -54,18 +55,13 @@ export default function AppBar() {
           )}
         </IconButton>
         <Typography variant='h6'>
-          <NavLink
-            to='/'
-            style={{ color: 'unset', textDecoration: 'none' }}
-          >
+          <NavLink to='/' style={{ color: 'unset', textDecoration: 'none' }}>
             Proactiva
           </NavLink>
         </Typography>
-        {!isMobile &&
-          <Typography className={classes.pageName}>
-            Project 1
-          </Typography>
-        }
+        {!isMobile && (
+          <Typography className={classes.pageName}>{pageTitle}</Typography>
+        )}
         <SyncState />
       </Toolbar>
     </MuiAppBar>
