@@ -32,6 +32,7 @@ export default function TaskList({ projectId }: { projectId: Id }) {
 
     setTasks(newTasks)
   }
+
   return (
     <div style={{ display: 'flex', flexGrow: 1 }}>
       <DragDropContext onDragEnd={onDragEnd}>

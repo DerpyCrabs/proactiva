@@ -25,9 +25,10 @@ import {
   KeyboardArrowDown,
 } from '@material-ui/icons'
 import { makeStyles } from '@material-ui/styles'
-import { projectsState } from '../../state'
+import { drawerState, projectsState } from '../../state'
 import AddProject from './AddProject'
 import ProjectActions from './ProjectActions'
+import { useIsMobile } from '../../utils'
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -74,9 +75,14 @@ export default function ProjectTree() {
   const tree = useAtomValue(projectTreeState)
   const setProjects = useUpdateAtom(projectsState)
   const history = useHistory()
+  const setDrawer = useUpdateAtom(drawerState)
+  const isMobile = useIsMobile()
 
   const openProject = (id: Id) => {
     history.push(`/${id}`)
+    if (isMobile) {
+      setDrawer(false)
+    }
   }
 
   const onVisibilityToggle = ({

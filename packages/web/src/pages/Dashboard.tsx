@@ -12,8 +12,7 @@ export default function Dashboard() {
   return (
     <div
       style={{
-        paddingTop: '32px',
-        paddingLeft: '45px',
+        padding: '32px',
       }}
     >
       {isMobile && (
