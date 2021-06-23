@@ -1,11 +1,11 @@
 import axios from 'axios'
 import type { Id, NetworkState, Note, Project, Todo } from 'common-types'
-import { WritableAtom, atom, useAtom } from 'jotai'
-import { SetStateAction } from 'jotai/core/types'
+import { WritableAtom, atom, useAtom, SetStateAction } from 'jotai'
 import { focusAtom } from 'jotai/optics'
+import { atomFamily, atomWithDefault } from 'jotai/utils'
 import { useCallback } from 'react'
 
-const networkState = atom<NetworkState, SetStateAction<NetworkState>>(
+const networkBaseState = atomWithDefault(
   async (_get) => {
     const data = localStorage.getItem('data')
     if (!data) {
@@ -21,16 +21,19 @@ const networkState = atom<NetworkState, SetStateAction<NetworkState>>(
       const state = JSON.parse(data)
       return {...state, lastTimeSuccessfullyUpdated: new Date(state.lastTimeSuccessfullyUpdated)}
     }
-  },
+  }
+)
+const networkState = atom<NetworkState, SetStateAction<NetworkState>>(
+  (get) => get(networkBaseState),
   async (get, set, setAction) => {
     let newState
     if (typeof setAction === 'function') {
-      newState = setAction(get(networkState))
+      newState = setAction(get(networkBaseState))
     } else {
       newState = setAction
     }
     localStorage.setItem('data', JSON.stringify(newState))
-    set(networkState, newState)
+    set(networkBaseState, newState)
   }
 )
 
@@ -67,10 +70,11 @@ export const maxIdState = atom((get) => {
   return Math.max(...tasks.map((t) => t.id))
 })
 
-export const taskState = (id: Id) =>
+export const taskState = atomFamily((id: Id) =>
   focusAtom(tasksState, (optic) => optic.find((t) => t.id === id))
+)
 
-export const projectTasksState = (id: Id) =>
+export const projectTasksState = atomFamily((id: Id) =>
   (focusAtom(tasksState, (optic) =>
     optic.filter(
       (t) => t.parent === id && (t.kind === 'Todo' || t.kind === 'Note')
@@ -79,6 +83,7 @@ export const projectTasksState = (id: Id) =>
     Array<Todo | Note>,
     SetStateAction<Array<Todo | Note>>
   >
+)
 
 export const projectsState = (focusAtom(tasksState, (optic) =>
   optic.filter((t) => t.kind === 'Project')
