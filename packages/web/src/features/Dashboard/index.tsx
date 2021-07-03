@@ -1,32 +1,41 @@
+import { makeStyles, Theme } from '@material-ui/core'
+
 import type { Task } from 'common-types'
 import { useAtomValue, useUpdateAtom } from 'jotai/utils'
 import React, { CSSProperties } from 'react'
-import {
-  DragDropContext,
-  Draggable,
-  DraggableProvidedDraggableProps,
-  Droppable,
-  DropResult,
-} from 'react-beautiful-dnd'
+import { DragDropContext, Draggable, DraggableProvidedDraggableProps, Droppable, DropResult } from 'react-beautiful-dnd'
 import { favoriteProjectIdsState, favoriteProjectsValue, tasksState } from '../../state'
 import { reorder } from '../../utils'
 import Project from './Project'
 
-const grid = 8
-
-const getItemStyle = (
-  isDragging: boolean,
-  draggableStyle: DraggableProvidedDraggableProps['style']
-) =>
+const projectWrapperStyle = (isDragging: boolean, draggableStyle: DraggableProvidedDraggableProps['style']) =>
   ({
-    userSelect: 'none',
-    padding: grid * 2,
-    margin: `0 ${grid}px 0 0`,
-    background: isDragging ? 'lightgreen' : 'grey',
     ...draggableStyle,
   } as CSSProperties)
 
+const useStyles = makeStyles((theme: Theme) => ({
+  projectsWrapper: {
+    display: 'flex',
+    width: '100%',
+    '& > div': {
+      marginRight: theme.spacing(1),
+      height: 'fit-content',
+    },
+    '& > div:last-child': {
+      marginRight: 0,
+    },
+  },
+  projectWrapper: {
+    border: `1px solid ${theme.palette.grey[800]}`,
+    borderRadius: 4,
+    userSelect: 'none',
+    width: '320px',
+    flexShrink: 0,
+  },
+}))
+
 export default function Dashboard() {
+  const classes = useStyles()
   const favoriteProjects = useAtomValue(favoriteProjectsValue)
   const setTasks = useUpdateAtom(tasksState)
   const setFavoriteProjectIds = useUpdateAtom(favoriteProjectIdsState)
@@ -38,9 +47,7 @@ export default function Dashboard() {
 
     if (result.type === 'project') {
       const destination = result.destination
-      setFavoriteProjectIds((favoriteProjectIds) =>
-        reorder(favoriteProjectIds, result.source.index, destination.index)
-      )
+      setFavoriteProjectIds((favoriteProjectIds) => reorder(favoriteProjectIds, result.source.index, destination.index))
     } else {
       setTasks((tasks) => {
         const sourceId = Number(result.source.droppableId)
@@ -51,61 +58,40 @@ export default function Dashboard() {
           return reorderDifferentProjects(result, tasks)
         }
       })
-    }    
+    }
   }
 
-  return (
-    <div>
-      <DragDropContext onDragEnd={onDragEnd}>
-        <Droppable
-          droppableId='project'
-          direction='horizontal'
-          type='project'
+  const renderFavoriteProjects = favoriteProjects.map((project, index) => (
+    <Draggable key={project.id} draggableId={`project-${project.id.toString()}`} index={index}>
+      {(provided, snapshot) => (
+        <div
+          className={classes.projectWrapper}
+          ref={provided.innerRef}
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+          style={projectWrapperStyle(snapshot.isDragging, provided.draggableProps.style)}
         >
-          {(provided, snapshot) => (
-            <div
-              ref={provided.innerRef}
-              style={{
-                  display: 'flex',
-                  padding: grid,
-                  overflow: 'auto',
-              }}
-              {...provided.droppableProps}
-            >
-              {favoriteProjects.map((project, index) => (
-                <Draggable
-                  key={project.id}
-                  draggableId={`project-${project.id.toString()}`}
-                  index={index}
-                >
-                  {(provided, snapshot) => (
-                    <div
-                      ref={provided.innerRef}
-                      {...provided.draggableProps}
-                      {...provided.dragHandleProps}
-                      style={getItemStyle(
-                        snapshot.isDragging,
-                        provided.draggableProps.style
-                      )}
-                    >
-                      <Project project={project} key={project.id} />
-                    </div>
-                  )}
-                </Draggable>
-              ))}
-              {provided.placeholder}
-            </div>
-          )}
-        </Droppable>
-      </DragDropContext>
-    </div>
+          <Project project={project} key={project.id} />
+        </div>
+      )}
+    </Draggable>
+  ))
+
+  return (
+    <DragDropContext onDragEnd={onDragEnd}>
+      <Droppable droppableId='project' direction='horizontal' type='project'>
+        {(provided, snapshot) => (
+          <div className={classes.projectsWrapper} ref={provided.innerRef} {...provided.droppableProps}>
+            {renderFavoriteProjects}
+            {provided.placeholder}
+          </div>
+        )}
+      </Droppable>
+    </DragDropContext>
   )
 }
 
-const reorderSameProject = (
-  result: DropResult,
-  tasks: Array<Task>
-): Array<Task> => {
+const reorderSameProject = (result: DropResult, tasks: Array<Task>): Array<Task> => {
   const destinationId = Number(result.destination?.droppableId)
   const destinationIndex = result.destination?.index
   const draggableId = Number(result.draggableId)
@@ -127,10 +113,7 @@ const reorderSameProject = (
   return reorder(tasks, startIndex, endIndex)
 }
 
-const reorderDifferentProjects = (
-  result: DropResult,
-  tasks: Array<Task>
-): Array<Task> => {
+const reorderDifferentProjects = (result: DropResult, tasks: Array<Task>): Array<Task> => {
   const destinationId = Number(result.destination?.droppableId)
   const destinationIndex = result.destination?.index
   const draggableId = Number(result.draggableId)
@@ -141,10 +124,7 @@ const reorderDifferentProjects = (
   const endIndex = (() => {
     let destinationPos = -1
     for (let i = 0; i < tasks.length; i++) {
-      if (
-        tasksCopy[i].parent === destinationId &&
-        tasksCopy[i].kind !== 'Project'
-      ) {
+      if (tasksCopy[i].parent === destinationId && tasksCopy[i].kind !== 'Project') {
         destinationPos += 1
       }
       if (destinationPos + 1 === destinationIndex) {
