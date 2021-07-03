@@ -29,6 +29,7 @@ export default function TaskDescription({
       onClose={() => close()}
       aria-labelledby='form-dialog-title'
       title={`Edit ${task.kind.toLocaleLowerCase()} "${task.name}"`}
+      fullWidth={true}
     >
       <DialogContent>
         <TextField

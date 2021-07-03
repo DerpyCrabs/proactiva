@@ -1,26 +1,20 @@
 import type { Note, Todo } from 'common-types'
 import { useUpdateAtom } from 'jotai/utils'
 import { assoc } from 'ramda'
-import React, { CSSProperties } from 'react'
-import { Draggable, DraggableProvidedDraggableProps } from 'react-beautiful-dnd'
+import React from 'react'
+import { Draggable } from 'react-beautiful-dnd'
 import { Checkbox, IconButton, makeStyles, Theme } from '@material-ui/core'
 import { Delete, Edit, Subject } from '@material-ui/icons'
 import { taskState } from '../../state'
 import TaskDescription from '../TaskDescription'
 
-const taskStyle = (isDragging: boolean, draggableStyle: DraggableProvidedDraggableProps['style']) =>
-  ({
-    background: isDragging && 'lightgreen',
-    ...draggableStyle,
-  } as CSSProperties)
-
 const useStyles = makeStyles((theme: Theme) => ({
   task: {
     userSelect: 'none',
     background: theme.palette.grey[800],
-    border: `1px solid ${theme.palette.grey[700]}`,
     borderRadius: theme.spacing(0.5),
     padding: theme.spacing(1.5),
+    boxShadow: '1px 1px 10px 1px #222',
   },
   footer: {
     margin: theme.spacing(-1.5),
@@ -48,7 +42,11 @@ export default function Task({
 
   const renderIcon =
     task.kind === 'Todo' ? (
-      <Checkbox checked={task.status} size='small' onChange={() => setTask(assoc('status', !task.status))} />
+      <Checkbox
+        checked={task.status}
+        size='small'
+        onChange={() => setTask(assoc('status', !task.status))}
+      />
     ) : (
       <IconButton className={classes.iconButton}>
         <Subject className={classes.icon} />
@@ -57,7 +55,10 @@ export default function Task({
 
   const renderButtons = (
     <div className={classes.buttonsWrapper}>
-      <IconButton className={classes.iconButton} onClick={() => setShowDescriptionModal(true)}>
+      <IconButton
+        className={classes.iconButton}
+        onClick={() => setShowDescriptionModal(true)}
+      >
         <Edit className={classes.icon} />
       </IconButton>
       <IconButton className={classes.iconButton} onClick={deleteTask}>
@@ -74,14 +75,17 @@ export default function Task({
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
-          style={taskStyle(snapshot.isDragging, provided.draggableProps.style)}
         >
           {task.name}
           <div className={classes.footer}>
             {renderIcon}
             {renderButtons}
           </div>
-          <TaskDescription id={task.id} isOpen={showDescriptionModal} close={() => setShowDescriptionModal(false)} />
+          <TaskDescription
+            id={task.id}
+            isOpen={showDescriptionModal}
+            close={() => setShowDescriptionModal(false)}
+          />
         </div>
       )}
     </Draggable>

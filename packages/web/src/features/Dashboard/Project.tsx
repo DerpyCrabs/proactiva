@@ -15,8 +15,8 @@ const tasksWrapperStyle = (isDraggingOver: boolean) =>
 
 const useStyles = makeStyles((theme: Theme) => ({
   tasksWrapper: {
-    padding: '10px 0',
-    margin: '0 10px',
+    padding: '16px 0',
+    margin: '0 16px',
     borderTop: `1px solid ${theme.palette.grey[800]}`,
 
     '& > div': {
@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 
   title: {
-    padding: '0px 10px',
+    padding: '0px 24px',
     height: `calc(${theme.typography.h6.fontSize} * ${theme.typography.h6.lineHeight} * 2)`,
     overflow: 'hidden',
 
@@ -73,7 +73,12 @@ export default function Project({ project }: { project: ProjectType }) {
             {...provided.droppableProps}
           >
             {projectTasks.map((task: Note | Todo, index: number) => (
-              <Task task={task} index={index} deleteTask={deleteTask(task.id)} key={task.id} />
+              <Task
+                task={task}
+                index={index}
+                deleteTask={deleteTask(task.id)}
+                key={task.id}
+              />
             ))}
             {provided.placeholder}
           </div>
