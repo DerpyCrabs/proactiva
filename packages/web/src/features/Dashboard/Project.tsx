@@ -35,6 +35,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 
     '& > .MuiTypography-root': {
       display: '-webkit-inline-box',
+      lineHeight: 1.3,
       maxHeight: '100%',
       verticalAlign: 'middle',
       WebkitLineClamp: 2,
