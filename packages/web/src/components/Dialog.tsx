@@ -37,7 +37,7 @@ const styles = (theme: Theme) =>
 
 const Dialog = ({
   scroll = 'body',
-  maxWidth = false,
+  maxWidth = 'md',
   title,
   classes,
   children,
