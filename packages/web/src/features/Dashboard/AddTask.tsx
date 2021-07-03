@@ -2,22 +2,22 @@ import type { Id, Note, Task, Todo } from 'common-types'
 import { useAtomValue, useUpdateAtom } from 'jotai/utils'
 import { append } from 'ramda'
 import React from 'react'
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  TextField,
-  makeStyles,
-} from '@material-ui/core'
+import { Button, Dialog, DialogActions, DialogContent, TextField, makeStyles, Theme } from '@material-ui/core'
 import { Add } from '@material-ui/icons'
 import { maxIdState, tasksState } from '../../state'
 
-const useStyles = makeStyles({
-  buttonLabel: {
-    marginRight: '26px',
+const useStyles = makeStyles((theme: Theme) => ({
+  button: {
+    color: theme.palette.grey['A200'],
+    margin: '0 0 10px 10px',
   },
-})
+  buttonLabel: {
+    marginRight: '22px',
+  },
+  buttonStartIcon: {
+    marginRight: '4px',
+  },
+}))
 
 export default function AddTask({ projectId }: { projectId: Id }) {
   const classes = useStyles()
@@ -56,11 +56,11 @@ export default function AddTask({ projectId }: { projectId: Id }) {
   return (
     <>
       <Button
-        style={{ margin: '0 -6px', color: '#bbb', flex: '1' }}
+        className={classes.button}
+        classes={{ label: classes.buttonLabel, startIcon: classes.buttonStartIcon }}
         startIcon={<Add />}
         size='small'
         onClick={() => setShowModal(true)}
-        classes={{ label: classes.buttonLabel }}
       >
         Add Task
       </Button>
