@@ -15,16 +15,13 @@ const tasksWrapperStyle = (isDraggingOver: boolean) =>
 
 const useStyles = makeStyles((theme: Theme) => ({
   tasksWrapper: {
-    padding: '16px 0',
-    margin: '0 16px',
+    paddingTop: theme.spacing(2),
+    paddingBottom: 0,
+    margin: `0 ${theme.spacing(2)}px`,
     borderTop: `1px solid ${theme.palette.grey[800]}`,
 
     '& > div': {
       marginBottom: theme.spacing(2),
-    },
-
-    '& > div:last-child': {
-      marginBottom: 0,
     },
   },
 
