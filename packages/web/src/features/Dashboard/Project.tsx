@@ -2,16 +2,11 @@ import { makeStyles, Paper, Typography, Theme } from '@material-ui/core'
 import type { Id, Note, Project as ProjectType, Todo } from 'common-types'
 import { useAtom } from 'jotai'
 import { complement, filter, propEq } from 'ramda'
-import React, { CSSProperties } from 'react'
+import React from 'react'
 import { Droppable } from 'react-beautiful-dnd'
 import { projectTasksState } from '../../state'
 import AddTask from './AddTask'
 import Task from './Task'
-
-const tasksWrapperStyle = (isDraggingOver: boolean) =>
-  ({
-    // background: isDraggingOver && 'lightgrey',
-  } as CSSProperties)
 
 const useStyles = makeStyles((theme: Theme) => ({
   tasksWrapper: {
@@ -66,7 +61,6 @@ export default function Project({ project }: { project: ProjectType }) {
           <div
             ref={provided.innerRef}
             className={classes.tasksWrapper}
-            style={tasksWrapperStyle(snapshot.isDraggingOver)}
             {...provided.droppableProps}
           >
             {projectTasks.map((task: Note | Todo, index: number) => (
