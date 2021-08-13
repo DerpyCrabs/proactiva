@@ -3,17 +3,19 @@ import './index.css'
 import { Provider } from 'jotai'
 import React, { Suspense } from 'react'
 import ReactDOM from 'react-dom'
-import { CssBaseline, ThemeProvider } from '@material-ui/core'
-import { blue } from '@material-ui/core/colors'
-import { createMuiTheme } from '@material-ui/core/styles'
+import {
+  CssBaseline,
+  ThemeProvider,
+  createTheme,
+  colors,
+} from '@material-ui/core'
 import Index from './pages/Index'
-import * as ServiceWorkerRegistration from './serviceWorkerRegistration'
 
-const theme = createMuiTheme({
+const theme = createTheme({
   palette: {
     type: 'dark',
     primary: {
-      main: blue[500],
+      main: colors.blue[500],
     },
     background: {
       default: '#1f1f1f',
@@ -41,5 +43,3 @@ ReactDOM.render(
   </React.StrictMode>,
   document.getElementById('root')
 )
-
-ServiceWorkerRegistration.register()

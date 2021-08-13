@@ -8,5 +8,8 @@
     "start-web": "yarn workspace proactiva-web start",
     "start-server": "yarn workspace proactiva-server start",
     "serve-web": "yarn workspace proactiva-web serve"
+  },
+  "resolutions": {
+    "react-virtualized": "patch:react-virtualized@9.22.3#./patches/react-virtualized-9.22.3.patch"
   }
 }

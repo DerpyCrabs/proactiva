@@ -49,9 +49,9 @@ export default function AppBar() {
           onClick={() => setDrawer((prev) => !prev)}
         >
           {isMobile && drawer ? (
-            <CloseIcon fontSize={isMobile ? 'small' : 'default'} />
+            <CloseIcon fontSize={isMobile ? 'small' : 'medium'} />
           ) : (
-            <MenuIcon fontSize={isMobile ? 'small' : 'default'} />
+            <MenuIcon fontSize={isMobile ? 'small' : 'medium'} />
           )}
         </IconButton>
         <Typography variant='h6'>
