@@ -1,4 +1,4 @@
-import 'react-sortable-tree/style.css'
+import '@nosferatu500/react-sortable-tree/style.css'
 import './ProjectTree.css'
 
 import type { Id, Project } from 'common-types'
@@ -15,7 +15,8 @@ import SortableTree, {
   OnVisibilityToggleData,
   getFlatDataFromTree,
   getTreeFromFlatData,
-} from 'react-sortable-tree'
+  //@ts-ignore
+} from '@nosferatu500/react-sortable-tree'
 //@ts-ignore
 import MaterialTheme from 'react-sortable-tree-theme-material-ui'
 import { Theme, Typography } from '@material-ui/core'
@@ -36,7 +37,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     marginTop: '84px',
     height: 'calc(100vh - 84px)', // mt = 20 + appbarHeight = 64
 
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       marginTop: '68px',
       height: 'calc(100vh - 68px)', // mt = 20 + appbarHeight = 48
     },

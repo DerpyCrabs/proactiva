@@ -7,11 +7,11 @@ import {
   Dialog as MuiDialog,
   Theme,
   Typography,
-  createStyles,
-  withStyles,
 } from '@material-ui/core'
+import createStyles from '@material-ui/styles/createStyles'
 import CloseIcon from '@material-ui/icons/Close'
 import { useIsMobile } from '../utils'
+import { withStyles } from '@material-ui/styles'
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -20,7 +20,7 @@ const styles = (theme: Theme) =>
 
       [theme.breakpoints.up('sm')]: {
         margin: theme.spacing(2),
-        maxWidth: `calc(100% - ${theme.spacing(2) * 2}px)`,
+        maxWidth: `calc(100% - calc(${theme.spacing(2)} * 2))`,
       },
       [theme.breakpoints.up('md')]: {
         margin: theme.spacing(4),
@@ -46,7 +46,13 @@ const Dialog = ({
 }: DialogProps & { title: string; onClose: () => void; classes: any }) => {
   const fullScreen = useIsMobile()
   return (
-    <MuiDialog fullScreen={fullScreen} scroll={scroll} maxWidth={maxWidth} onClose={onClose} {...restProps}>
+    <MuiDialog
+      fullScreen={fullScreen}
+      scroll={scroll}
+      maxWidth={maxWidth}
+      onClose={onClose}
+      {...restProps}
+    >
       <DialogTitle>
         <Box display='flex' justifyContent='space-between' alignItems='center'>
           <Typography variant='h6' className={classes.dialogTitle}>

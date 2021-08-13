@@ -1,4 +1,5 @@
-import { makeStyles, Paper, Typography, Theme } from '@material-ui/core'
+import { Paper, Typography, Theme } from '@material-ui/core';
+import makeStyles from '@material-ui/styles/makeStyles';
 import type { Id, Note, Project as ProjectType, Todo } from 'common-types'
 import { useAtom } from 'jotai'
 import { complement, filter, propEq } from 'ramda'
@@ -12,7 +13,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   tasksWrapper: {
     paddingTop: theme.spacing(2),
     paddingBottom: 0,
-    margin: `0 ${theme.spacing(2)}px`,
+    margin: `0 ${theme.spacing(2)}`,
     borderTop: `1px solid ${theme.palette.grey[800]}`,
 
     '& > div': {

@@ -1,4 +1,6 @@
-import { makeStyles, Theme } from '@material-ui/core'
+import { Theme } from '@material-ui/core';
+
+import makeStyles from '@material-ui/styles/makeStyles';
 
 import type { Task } from 'common-types'
 import { useAtomValue, useUpdateAtom } from 'jotai/utils'
@@ -23,7 +25,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     width: '100%',
 
     '& > div': {
-      margin: `0px ${theme.spacing(1)}px`,
+      margin: `0px ${theme.spacing(1)}`,
       height: 'fit-content',
     },
   },

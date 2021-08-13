@@ -6,14 +6,21 @@ import ReactDOM from 'react-dom'
 import {
   CssBaseline,
   ThemeProvider,
+  Theme,
+  StyledEngineProvider,
   createTheme,
   colors,
 } from '@material-ui/core'
 import Index from './pages/Index'
 
+declare module '@material-ui/styles/defaultTheme' {
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
+  interface DefaultTheme extends Theme {}
+}
+
 const theme = createTheme({
   palette: {
-    type: 'dark',
+    mode: 'dark',
     primary: {
       main: colors.blue[500],
     },
@@ -31,15 +38,17 @@ const theme = createTheme({
 
 ReactDOM.render(
   <React.StrictMode>
-    <ThemeProvider theme={theme}>
-      <CssBaseline>
-        <Provider>
-          <Suspense fallback={<div>loading...</div>}>
-            <Index />
-          </Suspense>
-        </Provider>
-      </CssBaseline>
-    </ThemeProvider>
+    <StyledEngineProvider injectFirst>
+      <ThemeProvider theme={theme}>
+        <CssBaseline>
+          <Provider>
+            <Suspense fallback={<div>loading...</div>}>
+              <Index />
+            </Suspense>
+          </Provider>
+        </CssBaseline>
+      </ThemeProvider>
+    </StyledEngineProvider>
   </React.StrictMode>,
   document.getElementById('root')
 )

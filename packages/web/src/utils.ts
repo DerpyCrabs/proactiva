@@ -44,5 +44,5 @@ export function formatDateRelativeToNow(date: Date) {
 }
 
 export function useIsMobile(): boolean {
-  return useMediaQuery((theme: Theme) => theme.breakpoints.down('xs'))
+  return useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'));
 }

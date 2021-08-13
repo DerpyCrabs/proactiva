@@ -1,13 +1,7 @@
 import clsx from 'clsx'
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom'
-import {
-  Box,
-  Drawer,
-  Hidden,
-  SwipeableDrawer,
-  Theme,
-  makeStyles,
-} from '@material-ui/core'
+import { Box, Drawer, Hidden, SwipeableDrawer, Theme } from '@material-ui/core';
+import makeStyles from '@material-ui/styles/makeStyles';
 import ProjectTree from '../features/ProjectTree/ProjectTree'
 import Dashboard from './Dashboard'
 import TaskList from './TaskList'
@@ -40,7 +34,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     marginTop: '64px',
     height: 'calc(100vh - 64px)',
 
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       marginTop: '48px',
       height: 'calc(100vh - 48px)',
     },
@@ -90,7 +84,7 @@ export default function Index() {
         </Hidden>
 
         {/* Drawer for tablet, desktop */}
-        <Hidden xsDown>
+        <Hidden smDown>
           <Drawer
             variant='persistent'
             open={drawer}
@@ -112,5 +106,5 @@ export default function Index() {
         </main>
       </Box>
     </Router>
-  )
+  );
 }

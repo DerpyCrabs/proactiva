@@ -1,11 +1,5 @@
-import {
-  Toolbar,
-  IconButton,
-  AppBar as MuiAppBar,
-  Theme,
-  makeStyles,
-  Typography,
-} from '@material-ui/core'
+import { Toolbar, IconButton, AppBar as MuiAppBar, Theme, Typography } from '@material-ui/core';
+import makeStyles from '@material-ui/styles/makeStyles';
 import { useEffect } from 'react'
 import CloseIcon from '@material-ui/icons/Close'
 import MenuIcon from '@material-ui/icons/Menu'

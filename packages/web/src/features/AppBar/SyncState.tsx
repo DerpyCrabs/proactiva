@@ -34,18 +34,16 @@ export default function SyncState() {
       <IconButton
         onClick={forceSync}
         style={{ color: needsSync ? 'yellow' : 'white', marginLeft: 'auto' }}
-      >
+        size="large">
         <Sync />
       </IconButton>
-    )
+    );
   } else {
-    return (
-      <>
-        <Typography>Last time synced: {formattedTime}</Typography>
-        <IconButton onClick={forceSync}>
-          <Sync />
-        </IconButton>
-      </>
-    )
+    return <>
+      <Typography>Last time synced: {formattedTime}</Typography>
+      <IconButton onClick={forceSync} size="large">
+        <Sync />
+      </IconButton>
+    </>;
   }
 }

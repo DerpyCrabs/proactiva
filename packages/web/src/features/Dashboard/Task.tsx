@@ -3,7 +3,8 @@ import { useUpdateAtom } from 'jotai/utils'
 import { assoc } from 'ramda'
 import React from 'react'
 import { Draggable } from 'react-beautiful-dnd'
-import { Checkbox, IconButton, makeStyles, Theme } from '@material-ui/core'
+import { Checkbox, IconButton, Theme } from '@material-ui/core';
+import makeStyles from '@material-ui/styles/makeStyles';
 import { Delete, Edit, Subject } from '@material-ui/icons'
 import { taskState } from '../../state'
 import TaskDescription from '../TaskDescription'
@@ -48,7 +49,7 @@ export default function Task({
         onChange={() => setTask(assoc('status', !task.status))}
       />
     ) : (
-      <IconButton className={classes.iconButton}>
+      <IconButton className={classes.iconButton} size="large">
         <Subject className={classes.icon} />
       </IconButton>
     )
@@ -58,10 +59,10 @@ export default function Task({
       <IconButton
         className={classes.iconButton}
         onClick={() => setShowDescriptionModal(true)}
-      >
+        size="large">
         <Edit className={classes.icon} />
       </IconButton>
-      <IconButton className={classes.iconButton} onClick={deleteTask}>
+      <IconButton className={classes.iconButton} onClick={deleteTask} size="large">
         <Delete className={classes.icon} />
       </IconButton>
     </div>

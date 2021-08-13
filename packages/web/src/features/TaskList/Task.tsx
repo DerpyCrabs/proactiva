@@ -94,7 +94,7 @@ export default function TaskItem({
               marginLeft: 8,
             }}
             onClick={() => setShowEditModal(true)}
-          >
+            size="large">
             <Edit style={{ fontSize: '1.4rem' }} />
           </IconButton>
           <IconButton
@@ -121,7 +121,7 @@ export default function TaskItem({
         </ListItem>
       )}
     </Draggable>
-  )
+  );
 }
 
 const getItemStyle = (isDragging: boolean, draggableStyle: any) => ({

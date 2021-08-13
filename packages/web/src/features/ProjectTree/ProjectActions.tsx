@@ -2,7 +2,8 @@ import { useAtom } from 'jotai'
 import { useUpdateAtom } from 'jotai/utils'
 import { append, complement, equals, filter, propEq } from 'ramda'
 import React from 'react'
-import { IconButton, Menu, MenuItem, makeStyles } from '@material-ui/core'
+import { IconButton, Menu, MenuItem } from '@material-ui/core';
+import makeStyles from '@material-ui/styles/makeStyles';
 import { MoreHoriz } from '@material-ui/icons'
 import { favoriteProjectIdsState, projectsState } from '../../state'
 import TaskDescription from '../TaskDescription'
