@@ -5,7 +5,7 @@ import React from 'react'
 import { DialogContent, DialogContentText, TextField } from '@material-ui/core'
 import Dialog from '../../components/Dialog'
 import { taskState } from '../../state'
-import DescriptionEditor from './DescriptionEditor'
+const DescriptionEditor = React.lazy(() => import('./DescriptionEditor'))
 
 export default function TaskDescription({
   id,
