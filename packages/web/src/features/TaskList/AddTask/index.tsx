@@ -1,8 +1,9 @@
-import type { Note, Task, Todo } from 'common-types'
+import type { Note, Spreadsheet, Task, Todo } from 'common-types'
 import { useAtomValue, useUpdateAtom } from 'jotai/utils'
 import { append } from 'ramda'
 import React from 'react'
 import { maxIdState, tasksState } from '../../../state'
+import { generateSpreadsheetData } from '../../../utils'
 import Activated from './Activated'
 import NotActivated from './NotActivated'
 
@@ -16,6 +17,7 @@ export default function AddTask({ projectId }: { projectId: number }) {
       setAdding(false)
     }
   }
+
   const addTodo = (name: string) =>
     addTask({
       kind: 'Todo',
@@ -35,12 +37,24 @@ export default function AddTask({ projectId }: { projectId: number }) {
       modificationDate: new Date(),
       parent: projectId,
     } as Note)
+  const addSpreadsheet = (name: string) =>
+    addTask({
+      kind: 'Spreadsheet',
+      id: maxId + 1,
+      name: name,
+      creationDate: new Date(),
+      modificationDate: new Date(),
+      parent: projectId,
+      data: generateSpreadsheetData({ rows: 20, columns: 30 }),
+    } as Spreadsheet)
+
   if (adding) {
     return (
       <Activated
         cancel={() => setAdding(false)}
         addTodo={addTodo}
         addNote={addNote}
+        addSpreadsheet={addSpreadsheet}
       />
     )
   } else {

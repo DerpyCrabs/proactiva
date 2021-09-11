@@ -1,4 +1,6 @@
 import { Theme, useMediaQuery } from '@mui/material'
+import { Spreadsheet, Task } from 'common-types'
+import { createEmptyMatrix } from 'react-spreadsheet'
 
 export function reorder<a>(
   oldArr: Array<a>,
@@ -44,5 +46,21 @@ export function formatDateRelativeToNow(date: Date) {
 }
 
 export function useIsMobile(): boolean {
-  return useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'));
+  return useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'))
+}
+
+export function isSpreadsheet(task: Task): task is Spreadsheet {
+  return task.kind === 'Spreadsheet'
+}
+
+export function generateSpreadsheetData({
+  rows,
+  columns,
+}: {
+  rows: number
+  columns: number
+}): Spreadsheet['data'] {
+  return [...new Array(rows)].map((row) =>
+    [...new Array(columns)].map((col) => ({ value: '' }))
+  )
 }

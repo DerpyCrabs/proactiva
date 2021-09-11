@@ -21,6 +21,11 @@ export interface Project extends Task {
   isExpanded: boolean
 }
 
+export interface Spreadsheet extends Task {
+  kind: 'Spreadsheet'
+  data: Array<{ value: string } | undefined>[]
+}
+
 export interface Note extends Task {
   kind: 'Note'
 }

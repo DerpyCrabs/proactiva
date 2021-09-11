@@ -1,11 +1,11 @@
-import type { Note, Todo } from 'common-types'
+import type { Note, Spreadsheet, Todo } from 'common-types'
 import { useUpdateAtom } from 'jotai/utils'
 import { assoc } from 'ramda'
 import React from 'react'
 import { Draggable } from 'react-beautiful-dnd'
-import { Checkbox, IconButton, Theme } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
-import { Delete, Edit, Subject } from '@mui/icons-material'
+import { Checkbox, IconButton, Theme } from '@mui/material'
+import makeStyles from '@mui/styles/makeStyles'
+import { Delete, Edit, Subject, ViewQuilt } from '@mui/icons-material'
 import { taskState } from '../../state'
 import TaskDescription from '../TaskDescription'
 
@@ -33,7 +33,7 @@ export default function Task({
   index,
   deleteTask,
 }: {
-  task: Todo | Note
+  task: Todo | Note | Spreadsheet
   index: number
   deleteTask: () => void
 }) {
@@ -48,8 +48,12 @@ export default function Task({
         size='small'
         onChange={() => setTask(assoc('status', !task.status))}
       />
+    ) : task.kind === 'Spreadsheet' ? (
+      <IconButton className={classes.iconButton} size='large'>
+        <ViewQuilt className={classes.icon} />
+      </IconButton>
     ) : (
-      <IconButton className={classes.iconButton} size="large">
+      <IconButton className={classes.iconButton} size='large'>
         <Subject className={classes.icon} />
       </IconButton>
     )
@@ -59,10 +63,15 @@ export default function Task({
       <IconButton
         className={classes.iconButton}
         onClick={() => setShowDescriptionModal(true)}
-        size="large">
+        size='large'
+      >
         <Edit className={classes.icon} />
       </IconButton>
-      <IconButton className={classes.iconButton} onClick={deleteTask} size="large">
+      <IconButton
+        className={classes.iconButton}
+        onClick={deleteTask}
+        size='large'
+      >
         <Delete className={classes.icon} />
       </IconButton>
     </div>

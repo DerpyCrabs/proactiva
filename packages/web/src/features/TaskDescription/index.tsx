@@ -1,11 +1,13 @@
-import type { Id } from 'common-types'
+import type { Id, Spreadsheet, Task } from 'common-types'
 import { useAtom } from 'jotai'
 import { lensProp, set } from 'ramda'
 import React from 'react'
 import { DialogContent, DialogContentText, TextField } from '@mui/material'
 import Dialog from '../../components/Dialog'
 import { taskState } from '../../state'
+import { isSpreadsheet } from '../../utils'
 const DescriptionEditor = React.lazy(() => import('./DescriptionEditor'))
+const SpreadsheetEditor = React.lazy(() => import('./SpreadsheetEditor'))
 
 export default function TaskDescription({
   id,
@@ -29,7 +31,7 @@ export default function TaskDescription({
       onClose={() => close()}
       aria-labelledby='form-dialog-title'
       title={`Edit ${task.kind.toLocaleLowerCase()} "${task.name}"`}
-      fullWidth={true}
+      fullWidth
     >
       <DialogContent>
         <TextField
@@ -41,10 +43,25 @@ export default function TaskDescription({
           value={task.name}
           onChange={(e) => setTask(set(lensProp('name'), e.target.value))}
         />
-        <DescriptionEditor
-          description={task.description || ''}
-          setDescription={(e) => setTask(set(lensProp('description'), e))}
-        />
+        {isSpreadsheet(task) ? (
+          <SpreadsheetEditor
+            data={task.data || []}
+            setData={(e) =>
+              setTask(
+                set<Spreadsheet, Spreadsheet['data']>(
+                  lensProp('data'),
+                  e
+                ) as unknown as Task
+              )
+            }
+          />
+        ) : (
+          <DescriptionEditor
+            description={task.description || ''}
+            setDescription={(e) => setTask(set(lensProp('description'), e))}
+          />
+        )}
+
         <DialogContentText style={{ paddingTop: '10px' }}>
           Creation date: {task.creationDate.toLocaleString()}
         </DialogContentText>

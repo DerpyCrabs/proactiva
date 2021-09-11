@@ -1,5 +1,12 @@
 import axios from 'axios'
-import type { Id, NetworkState, Note, Project, Todo } from 'common-types'
+import type {
+  Id,
+  NetworkState,
+  Note,
+  Project,
+  Spreadsheet,
+  Todo,
+} from 'common-types'
 import { WritableAtom, atom, useAtom, SetStateAction } from 'jotai'
 import { focusAtom } from 'jotai/optics'
 import {
@@ -87,11 +94,13 @@ export const projectTasksState = atomFamily(
   (id: Id) =>
     focusAtom(tasksState, (optic) =>
       optic.filter(
-        (t) => t.parent === id && (t.kind === 'Todo' || t.kind === 'Note')
+        (t) =>
+          t.parent === id &&
+          (t.kind === 'Todo' || t.kind === 'Note' || t.kind === 'Spreadsheet')
       )
     ) as unknown as WritableAtom<
-      Array<Todo | Note>,
-      SetStateAction<Array<Todo | Note>>
+      Array<Todo | Note | Spreadsheet>,
+      SetStateAction<Array<Todo | Note | Spreadsheet>>
     >
 )
 

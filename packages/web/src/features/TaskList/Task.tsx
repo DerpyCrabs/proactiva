@@ -1,4 +1,4 @@
-import type { Note, Task, Todo } from 'common-types'
+import type { Note, Spreadsheet, Task, Todo } from 'common-types'
 import { useUpdateAtom } from 'jotai/utils'
 import { assoc, filter } from 'ramda'
 import React from 'react'
@@ -10,7 +10,13 @@ import {
   ListItemIcon,
   ListItemText,
 } from '@mui/material'
-import { Delete, DragIndicator, Edit, Subject } from '@mui/icons-material'
+import {
+  Delete,
+  DragIndicator,
+  Edit,
+  Subject,
+  ViewQuilt,
+} from '@mui/icons-material'
 import Input from '../../components/Input'
 import { taskState, tasksState } from '../../state'
 import TaskDescription from '../TaskDescription'
@@ -20,7 +26,7 @@ export default function TaskItem({
   index,
 }: {
   projectId: number
-  item: Todo | Note
+  item: Todo | Note | Spreadsheet
   index: number
 }) {
   const setTasks = useUpdateAtom(tasksState)
@@ -58,6 +64,15 @@ export default function TaskItem({
               size='small'
               onChange={() => setTask(assoc('status', !item.status))}
             />
+          ) : item.kind === 'Spreadsheet' ? (
+            <ViewQuilt
+              style={{
+                height: '40.84px',
+                width: '40.84px',
+                padding: '9px',
+                color: '#cecece',
+              }}
+            />
           ) : (
             <Subject
               style={{
@@ -94,7 +109,8 @@ export default function TaskItem({
               marginLeft: 8,
             }}
             onClick={() => setShowEditModal(true)}
-            size="large">
+            size='large'
+          >
             <Edit style={{ fontSize: '1.4rem' }} />
           </IconButton>
           <IconButton
@@ -121,7 +137,7 @@ export default function TaskItem({
         </ListItem>
       )}
     </Draggable>
-  );
+  )
 }
 
 const getItemStyle = (isDragging: boolean, draggableStyle: any) => ({

@@ -5,10 +5,12 @@ export default function Activated({
   cancel,
   addNote,
   addTodo,
+  addSpreadsheet,
 }: {
   cancel: () => void
   addNote: (name: string) => void
   addTodo: (name: string) => void
+  addSpreadsheet: (name: string) => void
 }) {
   const [name, setName] = React.useState('')
   return (
@@ -67,6 +69,18 @@ export default function Activated({
               }}
             >
               Add Note
+            </Button>
+            <Button
+              variant='contained'
+              size='small'
+              disabled={name.length === 0}
+              style={{ marginLeft: '14px' }}
+              onClick={() => {
+                addSpreadsheet(name)
+                setName('')
+              }}
+            >
+              Add Spreadsheet
             </Button>
             <Button
               onClick={cancel}
