@@ -1,6 +1,6 @@
 import React from 'react'
-import { Box } from '@material-ui/core'
-import { Add } from '@material-ui/icons'
+import { Box } from '@mui/material'
+import { Add } from '@mui/icons-material'
 
 export default function NotActivated({ activate }: { activate: () => void }) {
   return (

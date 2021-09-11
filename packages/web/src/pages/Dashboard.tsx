@@ -1,5 +1,5 @@
 import React from 'react'
-import { Typography } from '@material-ui/core'
+import { Typography } from '@mui/material'
 import DashboardFeature from '../features/Dashboard'
 import { useIsMobile } from '../utils'
 import { usePageTitle, useSetPageTitle } from '../state'

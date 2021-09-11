@@ -2,9 +2,9 @@ import type { Id, Note, Task, Todo } from 'common-types'
 import { useAtomValue, useUpdateAtom } from 'jotai/utils'
 import { append } from 'ramda'
 import React from 'react'
-import { Button, Dialog, DialogActions, DialogContent, TextField, Theme } from '@material-ui/core';
-import makeStyles from '@material-ui/styles/makeStyles';
-import { Add } from '@material-ui/icons'
+import { Button, Dialog, DialogActions, DialogContent, TextField, Theme } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
+import { Add } from '@mui/icons-material'
 import { maxIdState, tasksState } from '../../state'
 
 const useStyles = makeStyles((theme: Theme) => ({

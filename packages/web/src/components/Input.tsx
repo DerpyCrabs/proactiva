@@ -1,5 +1,5 @@
-import { InputBase } from '@material-ui/core'
-import { withStyles } from '@material-ui/styles'
+import { InputBase } from '@mui/material'
+import { withStyles } from '@mui/styles'
 
 const Input = withStyles({
   root: {

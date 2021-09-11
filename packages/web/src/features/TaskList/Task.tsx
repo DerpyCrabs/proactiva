@@ -9,8 +9,8 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
-} from '@material-ui/core'
-import { Delete, DragIndicator, Edit, Subject } from '@material-ui/icons'
+} from '@mui/material'
+import { Delete, DragIndicator, Edit, Subject } from '@mui/icons-material'
 import Input from '../../components/Input'
 import { taskState, tasksState } from '../../state'
 import TaskDescription from '../TaskDescription'

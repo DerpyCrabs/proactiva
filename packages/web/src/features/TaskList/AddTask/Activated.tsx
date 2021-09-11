@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, ClickAwayListener, TextField } from '@material-ui/core'
+import { Button, ClickAwayListener, TextField } from '@mui/material'
 
 export default function Activated({
   cancel,

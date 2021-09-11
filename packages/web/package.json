@@ -5,9 +5,9 @@
   "dependencies": {
     "@emotion/react": "^11.4.1",
     "@emotion/styled": "^11.3.0",
-    "@material-ui/core": "next",
-    "@material-ui/icons": "next",
-    "@material-ui/styles": "next",
+    "@mui/icons-material": "next",
+    "@mui/material": "next",
+    "@mui/styles": "next",
     "@nosferatu500/react-sortable-tree": "^3.0.5",
     "axios": "^0.21.1",
     "clsx": "^1.1.1",

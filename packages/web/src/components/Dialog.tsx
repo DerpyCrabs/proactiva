@@ -7,11 +7,11 @@ import {
   Dialog as MuiDialog,
   Theme,
   Typography,
-} from '@material-ui/core'
-import createStyles from '@material-ui/styles/createStyles'
-import CloseIcon from '@material-ui/icons/Close'
+} from '@mui/material'
+import createStyles from '@mui/styles/createStyles'
+import CloseIcon from '@mui/icons-material/Close'
 import { useIsMobile } from '../utils'
-import { withStyles } from '@material-ui/styles'
+import { withStyles } from '@mui/styles'
 
 const styles = (theme: Theme) =>
   createStyles({

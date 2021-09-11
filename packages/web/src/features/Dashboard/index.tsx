@@ -1,6 +1,6 @@
-import { Theme } from '@material-ui/core';
+import { Theme } from '@mui/material';
 
-import makeStyles from '@material-ui/styles/makeStyles';
+import makeStyles from '@mui/styles/makeStyles';
 
 import type { Task } from 'common-types'
 import { useAtomValue, useUpdateAtom } from 'jotai/utils'

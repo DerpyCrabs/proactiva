@@ -1,8 +1,8 @@
-import { Toolbar, IconButton, AppBar as MuiAppBar, Theme, Typography } from '@material-ui/core';
-import makeStyles from '@material-ui/styles/makeStyles';
+import { Toolbar, IconButton, AppBar as MuiAppBar, Theme, Typography } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import { useEffect } from 'react'
-import CloseIcon from '@material-ui/icons/Close'
-import MenuIcon from '@material-ui/icons/Menu'
+import CloseIcon from '@mui/icons-material/Close'
+import MenuIcon from '@mui/icons-material/Menu'
 import { drawerState, usePageTitle } from '../../state'
 import { useAtom } from 'jotai'
 import React from 'react'

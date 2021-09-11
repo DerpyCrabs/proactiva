@@ -2,7 +2,7 @@ import type { Id } from 'common-types'
 import { useAtom } from 'jotai'
 import { lensProp, set } from 'ramda'
 import React from 'react'
-import { DialogContent, DialogContentText, TextField } from '@material-ui/core'
+import { DialogContent, DialogContentText, TextField } from '@mui/material'
 import Dialog from '../../components/Dialog'
 import { taskState } from '../../state'
 const DescriptionEditor = React.lazy(() => import('./DescriptionEditor'))

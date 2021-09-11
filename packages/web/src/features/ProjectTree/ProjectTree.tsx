@@ -19,13 +19,13 @@ import SortableTree, {
 } from '@nosferatu500/react-sortable-tree'
 //@ts-ignore
 import MaterialTheme from 'react-sortable-tree-theme-material-ui'
-import { Theme, Typography } from '@material-ui/core'
+import { Theme, Typography } from '@mui/material'
 import {
   ChevronRight,
   DragIndicator,
   KeyboardArrowDown,
-} from '@material-ui/icons'
-import { makeStyles } from '@material-ui/styles'
+} from '@mui/icons-material'
+import { makeStyles } from '@mui/styles'
 import { drawerState, projectsState } from '../../state'
 import AddProject from './AddProject'
 import ProjectActions from './ProjectActions'

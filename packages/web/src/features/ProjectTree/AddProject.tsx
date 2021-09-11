@@ -12,9 +12,9 @@ import {
   MenuItem,
   Select,
   TextField,
-} from '@material-ui/core';
-import makeStyles from '@material-ui/styles/makeStyles';
-import { Add } from '@material-ui/icons'
+} from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
+import { Add } from '@mui/icons-material'
 import Dialog from '../../components/Dialog'
 import { maxIdState, projectsState, tasksState } from '../../state'
 

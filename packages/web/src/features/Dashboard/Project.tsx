@@ -1,5 +1,5 @@
-import { Paper, Typography, Theme } from '@material-ui/core';
-import makeStyles from '@material-ui/styles/makeStyles';
+import { Paper, Typography, Theme } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import type { Id, Note, Project as ProjectType, Todo } from 'common-types'
 import { useAtom } from 'jotai'
 import { complement, filter, propEq } from 'ramda'

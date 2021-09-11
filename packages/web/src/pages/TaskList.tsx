@@ -1,7 +1,7 @@
 import React from 'react'
 import { useAtom } from 'jotai'
 import { useHistory, useParams } from 'react-router-dom'
-import { Typography } from '@material-ui/core'
+import { Typography } from '@mui/material'
 import TaskList from '../features/TaskList/TaskList'
 import { taskState, usePageTitle, useSetPageTitle } from '../state'
 import { useIsMobile } from '../utils'

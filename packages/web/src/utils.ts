@@ -1,4 +1,4 @@
-import { Theme, useMediaQuery } from '@material-ui/core'
+import { Theme, useMediaQuery } from '@mui/material'
 
 export function reorder<a>(
   oldArr: Array<a>,

@@ -1,7 +1,7 @@
 import clsx from 'clsx'
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom'
-import { Box, Drawer, Hidden, SwipeableDrawer, Theme } from '@material-ui/core';
-import makeStyles from '@material-ui/styles/makeStyles';
+import { Box, Drawer, Hidden, SwipeableDrawer, Theme } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import ProjectTree from '../features/ProjectTree/ProjectTree'
 import Dashboard from './Dashboard'
 import TaskList from './TaskList'

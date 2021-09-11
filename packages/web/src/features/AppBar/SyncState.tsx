@@ -1,5 +1,5 @@
-import { IconButton, Typography } from '@material-ui/core'
-import { Sync } from '@material-ui/icons'
+import { IconButton, Typography } from '@mui/material'
+import { Sync } from '@mui/icons-material'
 import { useAtomValue } from 'jotai/utils'
 import React, { useEffect, useState } from 'react'
 import { lastSyncTimeState, useForceSync } from '../../state'
